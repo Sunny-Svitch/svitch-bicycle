@@ -538,11 +538,16 @@ body.menu-open { overflow: hidden; }
     align-items: center;
     justify-content: center;
     background: var(--surface);
+    /* Lock the banner to the 1905x820 showcase ratio (≈2.32:1). The slide
+       becomes a 1905:820 box at any viewport width so the image fills it
+       edge-to-edge without spilling or distorting. */
+    aspect-ratio: 1905 / 820;
 }
 .hero-banner-slide img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     user-select: none;
 }
 
@@ -564,9 +569,9 @@ body.menu-open { overflow: hidden; }
 }
 .hero-banner-pagination .swiper-pagination-bullet {
     position: relative;
-    width: 40px;
-    height: 5px;
-    border-radius: 3px;
+    width: 26px;
+    height: 4px;
+    border-radius: 2px;
     background: rgba(255, 255, 255, 0.35);
     opacity: 1;
     margin: 0 !important;
@@ -873,7 +878,17 @@ body.menu-open { overflow: hidden; }
     .announce-text { font-size: 10px; letter-spacing: 1px; gap: 9px; }
 
     .hero { padding: 0; }
-    .hero-banner-pagination { right: 16px; bottom: 14px; gap: 6px; }
+    .hero-banner-pagination,
+    .hero-banner-pagination.swiper-pagination-bullets.swiper-pagination-horizontal {
+        left: 50%;
+        right: auto;
+        bottom: 14px;
+        width: auto;
+        transform: translateX(-50%);
+        justify-content: center;
+        gap: 6px;
+    }
+    .hero-banner-pagination .swiper-pagination-bullet { width: 22px; height: 4px; }
     .cycles { padding: 36px 16px 52px; }
     .hero-head { margin-bottom: 22px; }
     .hero-head .heading-copy .eyebrow { letter-spacing: 2.5px; font-size: 11px; }
