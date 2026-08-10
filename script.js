@@ -12,7 +12,7 @@ const COMPONENTS = [
   {
     name: "Suspension Seat",
     note: "Shock-absorbing saddle post",
-    img: "images/Suspension%20Seat.png",
+    img: "images/Suspension%20Seat.webp",
     x: 36,
     y: 31,
     side: "left",
@@ -20,7 +20,7 @@ const COMPONENTS = [
   {
     name: "XE Smart Display",
     note: "Speed, range and assist level",
-    img: "images/LITE%20XE%20Display.png",
+    img: "images/LITE-XE-Display.webp",
     x: 68,
     y: 16,
     side: "right",
@@ -28,7 +28,7 @@ const COMPONENTS = [
   {
     name: "Lithium Battery",
     note: "Removable, key-locked pack",
-    img: "images/Battery.png",
+    img: "images/Battery.webp",
     x: 57,
     y: 43,
     side: "right",
@@ -36,7 +36,7 @@ const COMPONENTS = [
   {
     name: "Svitch XE Motor",
     note: "Rear hub drive",
-    img: "images/Svitch%20XE%20Motor.png",
+    img: "images/Svitch%20XE%20Motor.webp",
     x: 19,
     y: 63,
     side: "right",
@@ -44,7 +44,7 @@ const COMPONENTS = [
   {
     name: "Pedal Assist",
     note: "Multi-level cadence sensing",
-    img: "images/Padel%20Assist%20png.png",
+    img: "images/Padel%20Assist%20png.webp",
     x: 41,
     y: 61,
     side: "left",
@@ -52,7 +52,7 @@ const COMPONENTS = [
   {
     name: "Disc Brakes",
     note: "Dual-disc stopping power",
-    img: "images/DishBreak.png",
+    img: "images/DishBreak.webp",
     x: 73,
     y: 63,
     side: "right",
@@ -197,6 +197,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
       layer.appendChild(spot);
     });
+  }
+
+  /* ─── Bike reveal ───
+       The cycle opens from its center as the section arrives, and only
+       then do the markers start their staggered pop. Both hang off this
+       one class (see .bike-stage.is-revealed in style.css) so they can
+       never drift apart.
+
+       This has to be scroll-driven: the markers' delays are inline
+       animation-delays, so before this existed they burned down from page
+       load and the whole stagger was finished long before anyone scrolled
+       this far. CSS holds them paused until the class lands. */
+  const bikeStage = document.getElementById("bikeStage");
+
+  if (bikeStage) {
+    const revealBike = () => bikeStage.classList.add("is-revealed");
+
+    if ("IntersectionObserver" in window) {
+      const bikeObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            revealBike();
+            bikeObserver.unobserve(entry.target);
+          });
+        },
+        // A fifth of the stage on screen — late enough that the reveal is
+        // watched rather than already spent by the time it's looked at.
+        { threshold: 0.2 },
+      );
+
+      bikeObserver.observe(bikeStage);
+    } else {
+      revealBike();
+    }
   }
 
   // Any click outside a hotspot or the currency menu closes them

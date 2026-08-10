@@ -807,14 +807,26 @@
       </div>
     </section>
 
-    <!-- SECTION 5 — SVITCH CYCLES (interactive bike showcase) -->
+    <!-- SECTION 5 — SVITCH CYCLES -->
     <section
       class="cycles"
       id="cycles"
       aria-label="Svitch electric cycle showcase"
     >
-      <!-- Ambient red glow behind the bike -->
-      <div class="hero-glow" aria-hidden="true"></div>
+      <!-- Full-width banner behind the section content. The inner layer is
+           sticky so the photo stays pinned to the viewport while the section
+           scrolls over it — the reveal reads like a window opening onto a
+           fixed image. -->
+      <div class="cycles-banner" id="cyclesBanner" aria-hidden="true">
+        <div class="cycles-banner-layer">
+          <img
+            src="images/explore-cycle.webp"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
 
       <!-- Heading — corner-frame, eyebrow + title (house style) -->
       <div class="hero-head heading-frame">
@@ -833,9 +845,9 @@
         </svg>
         <div class="hero-head-inner">
           <div class="heading-copy">
-            <p class="eyebrow eyebrow-line">The Svitch Range</p>
+            <p class="eyebrow">The Svitch Range</p>
             <h2 class="heading-title">
-              Explore Our <span class="accent">Cycles</span>
+              Explore Our <span class="accent">Cycle</span>
             </h2>
           </div>
           <p class="heading-desc">
@@ -868,10 +880,10 @@
         <div class="hotspot-layer" id="hotspotLayer"></div>
       </div>
 
-      <div class="hero-foot">
+      <!-- <div class="hero-foot">
         <a href="#products" class="btn-primary btn-lg">Explore The Build</a>
         <a href="#specs" class="btn-ghost">View Full Specs</a>
-      </div>
+      </div> -->
     </section>
 
     <!-- SECTION 6 — SVITCH STORIES -->

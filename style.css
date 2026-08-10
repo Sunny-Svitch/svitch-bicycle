@@ -438,7 +438,8 @@ body.menu-open { overflow: hidden; }
     .hero-banner-section { padding-bottom: 32px; }
 }
 
-/* The moved-down cycle showcase (after Merch) — red bike + hotspots. */
+/* The moved-down cycle showcase (after Merch) — red bike + hotspots,
+   sitting on the full-width explore-cycle banner (see .cycles-banner). */
 .cycles {
     position: relative;
     display: flex;
@@ -447,25 +448,72 @@ body.menu-open { overflow: hidden; }
     justify-content: flex-start;
     padding: var(--section-gap) 24px calc(var(--section-gap) + 24px);
     background: var(--black);
+    /* How far the banner box reaches past the section on each side — one
+       viewport, so the sticky layer is already pinned before the section
+       scrolls into view and stays pinned until it has fully left. */
+    --banner-reach: 100vh;
     overflow: hidden;
 }
+/* CLIP, not hidden: `overflow: hidden` would turn this section into a
+   scroll container and the sticky banner layer below would freeze against
+   it instead of the page. `overflow: clip` crops the same way without
+   creating one. The hidden above stays as the fallback for browsers that
+   don't know clip. */
+@supports (overflow: clip) {
+    .cycles { overflow: clip; }
+}
+@supports (height: 100lvh) {
+    .cycles { --banner-reach: 100lvh; }
+}
 
-/* Ambient red bloom behind the bike — keeps a pure-black page from
-   reading as flat, and separates the product from the background */
-.hero-glow {
+/* Full-width banner pinned behind the section content — the heading and
+   bike stage float above it.
+
+   The reveal: the .cycles-banner box is stretched a viewport beyond the
+   section top and bottom, and the image layer inside is `position: sticky`,
+   so it locks to the viewport for the whole time the section is on screen.
+   The section then slides over a stationary photo — the same effect
+   avoncycles.com gets from `background-attachment: fixed`, without its two
+   problems: fixed attachment is ignored on iOS Safari, and it repaints the
+   whole section on every scroll frame. Sticky composites on the GPU and
+   works on mobile. .cycles crops the overhang. */
+.cycles-banner {
     position: absolute;
-    left: 50%;
-    top: 55%;
-    width: min(1100px, 120vw);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(
-        circle,
-        rgba(173, 1, 1, 0.3) 0%,
-        rgba(173, 1, 1, 0.1) 38%,
-        transparent 68%
-    );
+    inset: calc(-1 * var(--banner-reach)) 0;
+    z-index: 0;
     pointer-events: none;
+}
+.cycles-banner-layer {
+    position: sticky;
+    top: 0;
+    height: var(--banner-reach);
+}
+.cycles-banner-layer img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Blur softens photo detail so the heading and hotspot cards stay
+       legible; the scale hides the transparent fringe blur leaves behind. */
+    filter: blur(2px);
+    transform: scale(1.06);
+}
+/* Darkening scrim — a flat gradient rather than a brightness() filter, so
+   the browser isn't re-filtering a 1672x941 image every scroll frame. */
+.cycles-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.62),
+        rgba(0, 0, 0, 0.74)
+    );
+}
+
+/* Parallax is motion — drop the banner back to a plain still image. */
+@media (prefers-reduced-motion: reduce) {
+    .cycles-banner { inset: 0; }
+    .cycles-banner-layer { position: static; height: 100%; }
 }
 
 /* ——— Cycles heading (corner-frame house style) ——— */
@@ -620,6 +668,26 @@ body.menu-open { overflow: hidden; }
     /* The source PNG is a square canvas with generous padding and a
        reflection baked in; this trims the dead space top and bottom. */
     margin: -6% 0 -12%;
+
+    /* Center-out reveal — the bike opens from its middle like a shutter
+       as the section arrives, so it lands on the banner instead of just
+       already being there. .is-revealed is set by an IntersectionObserver
+       on .bike-stage (script.js), NOT on page load: this section sits far
+       down the page and an on-load reveal would be over before anyone
+       scrolled to it. */
+    clip-path: inset(0 50% 0 50%);
+    opacity: 0;
+    transform: scale(1.08);
+    transition:
+        clip-path 1.05s var(--ease),
+        transform 1.05s var(--ease),
+        opacity 0.5s ease-out;
+    will-change: clip-path, transform;
+}
+.bike-stage.is-revealed .bike-img {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+    transform: scale(1);
 }
 
 .hotspot-layer {
@@ -639,6 +707,23 @@ body.menu-open { overflow: hidden; }
     pointer-events: auto;
     z-index: 3;
     animation: hotspot-in 0.5s var(--ease) both;
+    /* Held at the from-state until the bike has revealed. Pausing rather
+       than re-declaring the animation keeps the per-marker delays that JS
+       writes inline (0.5s + 0.15s x index) intact — they just start
+       counting from the reveal instead of from page load. */
+    animation-play-state: paused;
+}
+.bike-stage.is-revealed .hotspot { animation-play-state: running; }
+
+/* No reveal choreography — the bike and its markers are simply present,
+   without waiting on the observer. */
+@media (prefers-reduced-motion: reduce) {
+    .bike-img {
+        clip-path: none;
+        opacity: 1;
+        transform: none;
+    }
+    .hotspot { animation-play-state: running; }
 }
 
 @keyframes hotspot-in {

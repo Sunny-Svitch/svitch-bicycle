@@ -51,6 +51,23 @@ Single-page site (`index.html` + `style.css` + `script.js`), vanilla + GSAP/Swip
 - **Section spacing increased** in the Cycles block (padding uses `--section-gap` + heading margin up to 34px) and in Stories (heading padding up to 36px top / 44px bottom); mobile padding bumped accordingly
 - Add more banner slides: drop new `<div class="swiper-slide hero-banner-slide"><img src="images/slide-N.png" /></div>` into `#heroBannerSwiper .swiper-wrapper` — autoplay picks them up automatically.
 
+### 2026-08-10 — Cycles banner: scroll-reveal (avoncycles.com mechanism)
+- Reference analysed: avoncycles.com "Explore Categories / Pick Your Adventure". Their banner reveal is **not** an animation — the section carries `background: linear-gradient(#0009, #0009), url(mtb-hero-banner.png) center/cover no-repeat **fixed**`. `background-attachment: fixed` paints the image against the viewport, so the section slides over a stationary photo. Amplified by Lenis smooth scroll (`lerp: 0.03`). Their `.reveal` fade-up is a separate IntersectionObserver (`threshold 0.1`).
+- **We did not copy `background-attachment: fixed`** — it's ignored on iOS Safari and repaints the whole section every scroll frame.
+- Our version: `.cycles-banner` is stretched one viewport past the section on **both** sides (`inset: calc(-1 * var(--banner-reach)) 0`), and `.cycles-banner-layer` inside is `position: sticky; top: 0; height: var(--banner-reach)`. The layer is therefore already pinned before the section enters the viewport and stays pinned until it fully leaves — identical to fixed attachment, GPU-composited, works on mobile.
+- **`.cycles` uses `overflow: clip`, NOT `hidden`** (with `hidden` kept as the pre-`clip` fallback, upgraded in `@supports`). This is load-bearing: `overflow: hidden` makes the section a scroll container and the sticky layer would freeze against it instead of the page. Don't "tidy" this back to `hidden`.
+- `--banner-reach` is `100vh`, upgraded to `100lvh` via `@supports` so the layer still covers when a mobile URL bar retracts.
+- Darkening moved from a `brightness(0.72)` filter to a `linear-gradient(#0000009e, #000000bd)` scrim on `.cycles-banner::after` — a flat gradient instead of re-filtering a 1672×941 image every frame. Blur raised 1px → 2px, scale 1.03 → 1.06 to cover the blur fringe.
+- Cleaned up: removed the redundant `.hero-head, .bike-stage, .hero-foot { position: relative; z-index: 2 }` group (all three already declare it individually) and the orphaned `.hero-glow` comment stub; banner dropped to `z-index: 0`; added `loading="lazy"` + `decoding="async"` to the banner img; added a `prefers-reduced-motion` rule that flattens the banner to a still image.
+- **Still open**: `images/explore-cycle.png` is **1.8 MB** and the only non-webp image on the page — needs converting to `.webp` (no encoder installed locally).
+
+### 2026-08-10 — Cycles: bike reveals from center on scroll-in
+- `.bike-img` now opens from its middle like a shutter — `clip-path: inset(0 50% 0 50%)` → `inset(0)` with `scale(1.08)` → `1` and a fade, 1.05s on `--ease`. Fires when `.bike-stage` gets `.is-revealed`.
+- **Bug found and fixed:** the hotspot markers' stagger was burning down from **page load**, not from scroll-in. Their delays are inline `animation-delay`s (`0.5s + 0.15s x index`) written by `script.js`, so on a section this far down the page the whole stagger was finished before anyone ever saw it. CSS now ships `.hotspot { animation-play-state: paused }` and resumes on `.bike-stage.is-revealed` — pausing rather than redeclaring the animation keeps those inline delays intact, they just start counting from the reveal.
+- Trigger: one IntersectionObserver on `#bikeStage` at `threshold: 0.2`, adds `.is-revealed` once then unobserves (`script.js`). Falls back to revealing immediately where IO is missing.
+- `prefers-reduced-motion` shows the bike and markers outright, with no dependency on the observer.
+- **Note / not yet done**: the GSAP heading char-wave on `.hero-head .heading-title` has the *same* page-load problem — it's a bare `gsap.from()` with no ScrollTrigger, so the "Explore Our Cycle" title animates while the user is still up at the hero banner. Worth wrapping in a ScrollTrigger the same way.
+
 ---
 
 ## CHANGE LOG
