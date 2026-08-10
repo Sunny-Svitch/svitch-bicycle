@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    const heroTitle = document.querySelector(".hero-title");
+    const heroTitle = document.querySelector(".hero-head .heading-title");
 
     if (heroTitle && !reduced) {
       const wrapCharacters = (element) => {
@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       wrapCharacters(heroTitle);
 
-      gsap.from(".hero-title .char", {
+      gsap.from(".hero-head .heading-title .char", {
         y: 80,
 
         opacity: 0,
@@ -329,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "power4.out",
       });
 
-      gsap.to(".hero-title .accent .char", {
+      gsap.to(".hero-head .heading-title .accent .char", {
         color: "#AD0101",
 
         duration: 0.8,
@@ -479,6 +479,34 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && merchZoom && merchZoom.classList.contains("is-open")) setZoom(false);
     });
+
+    /* ── Top banner carousel — auto-play, bottom-right progress pills.
+       Each pill carries a progress fill that animates across the autoplay
+       delay so the user sees when the next slide fires. */
+    const bannerSwiperEl = document.getElementById("heroBannerSwiper");
+    const bannerPagination = document.getElementById("heroBannerPagination");
+
+    if (bannerSwiperEl && window.Swiper) {
+      const bannerSwiper = new Swiper(bannerSwiperEl, {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        speed: 700,
+        grabCursor: true,
+        autoplay: {
+          delay: 3200,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        },
+        pagination: {
+          el: bannerPagination,
+          clickable: true,
+          renderBullet: (index, className) =>
+            `<span class="${className}"><span class="banner-progress-fill"></span></span>`,
+        },
+        keyboard: { enabled: true },
+      });
+    }
 
     /* ── Section 5 — Svitch Stories: zoom-on-scroll gallery ──
        CSR-762 c4 mechanism: each stacked card has its own scroll window

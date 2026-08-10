@@ -16,8 +16,14 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
 
@@ -70,7 +76,11 @@
               <li><button role="option" data-cur="INR">INR &#8377;</button></li>
               <li><button role="option" data-cur="USD">USD $</button></li>
               <li><button role="option" data-cur="EUR">EUR &#8364;</button></li>
-              <li><button role="option" data-cur="AED">AED &#1583;.&#1573;</button></li>
+              <li>
+                <button role="option" data-cur="AED">
+                  AED &#1583;.&#1573;
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -156,20 +166,698 @@
 
     <div class="menu-backdrop" id="menuBackdrop" hidden></div>
 
-    <!------------------ HERO —----------------->
-    <section class="hero" id="hero">
+    <!------------------ SECTION 1 — HERO BANNER CAROUSEL ----------------->
+    <section
+      class="hero hero-banner-section"
+      id="hero"
+      aria-label="Svitch banner carousel"
+    >
+      <div class="hero-banner" id="heroBanner">
+        <div class="swiper hero-banner-swiper" id="heroBannerSwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide hero-banner-slide">
+              <img src="images/slide-1.png" alt="Svitch bike banner 1" />
+            </div>
+            <div class="swiper-slide hero-banner-slide">
+              <img src="images/slide-2.png" alt="Svitch bike banner 2" />
+            </div>
+            <div class="swiper-slide hero-banner-slide">
+              <img src="images/slide-3.png" alt="Svitch bike banner 3" />
+            </div>
+            <div class="swiper-slide hero-banner-slide">
+              <img src="images/slide-4.png" alt="Svitch bike banner 4" />
+            </div>
+          </div>
+        </div>
+        <div class="hero-banner-pagination" id="heroBannerPagination"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2 — PRODUCTS CAROUSEL -->
+    <section class="products" id="products" aria-label="Svitch product lineup">
+      <div class="products-pin" id="productsPin">
+        <div class="products-sticky">
+          <!-- Heading — corner-frame big heading -->
+          <div class="products-head heading-frame">
+            <svg
+              class="cf-mark cf-mark--tl"
+              viewBox="0 0 140 40"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <polyline
+                points="0,40 24,12 140,12"
+                fill="none"
+                stroke="rgba(255,255,255,0.45)"
+                stroke-width="1"
+              />
+            </svg>
+            <div class="products-head-inner">
+              <div class="heading-copy">
+                <p class="eyebrow">The Svitch Lineup</p>
+                <h2 class="heading-title">
+                  Built To <span class="accent">Move You</span>
+                </h2>
+              </div>
+              <p class="heading-desc">
+                Every e-cycle is engineered for the Indian road. Scroll to
+                explore the range
+              </p>
+            </div>
+            <svg
+              class="cf-mark cf-mark--br"
+              viewBox="0 0 140 40"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <polyline
+                points="140,0 116,28 0,28"
+                fill="none"
+                stroke="rgba(255,255,255,0.45)"
+                stroke-width="1"
+              />
+            </svg>
+          </div>
+
+          <div class="products-viewport">
+            <div class="products-track" id="productsTrack">
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img
+                    src="images/products/handpainted/Gujarat.webp"
+                    alt="Svitch Handpainted"
+                  />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch Handpainted</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 59,999</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch Handpainted to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img
+                    src="images/products/lite xe/Lite.webp"
+                    alt="Svitch Lite XE"
+                  />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch Lite XE</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 44,999</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch Lite XE   to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img src="images/products/Mxe/MXE.webp" alt="Svitch MXE" />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch MXE</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 52,999</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch MXE to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img
+                    src="images/products/Brorix_07.webp"
+                    alt="Svitch Brorix 7"
+                  />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch Brorix 7</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 27,999</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch Brorix 7 to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img
+                    src="images/products/Elegon.webp"
+                    alt="Svitch Elegon 7"
+                  />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch Elegon 7</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 30,999</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch Elegon 7 to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img src="images/products/Velono.webp" alt="Svitch Velona" />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch Velona</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 29,999</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch Velona to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img src="images/Battery.webp" alt="Svitch Power Pack" />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch Power Pack</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 24,999</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch Power Pack to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img src="images/DishBreak.webp" alt="Svitch Power Pack" />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch Disk Break</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 15,000</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch Disk Break to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img src="images/XE-Display.webp" alt="Svitch Display" />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch Display</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 20,999</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch Display to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="pcard">
+                <div class="pcard-media">
+                  <img src="images/Svitch XE Motor.webp" alt="Svitch Motor" />
+                </div>
+                <div class="pcard-body">
+                  <h3 class="pcard-name">Svitch Motor</h3>
+                  <div class="pcard-price-row">
+                    <p class="pcard-price">₹ 18,999</p>
+                    <button
+                      class="add-to-cart"
+                      type="button"
+                      aria-label="Add Svitch Motor to cart"
+                    >
+                      <i class="bi bi-bag-plus"></i> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 — FEATURES (bike + explore toggle → feature grid) -->
+    <section
+      class="features"
+      id="technology"
+      aria-label="Svitch advanced features"
+    >
+      <div class="features-inner">
+        <!-- Heading — corner-frame style, matches the products heading -->
+        <div class="features-head heading-frame">
+          <svg
+            class="cf-mark cf-mark--tl"
+            viewBox="0 0 140 40"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <polyline
+              points="0,40 24,12 140,12"
+              fill="none"
+              stroke="rgba(255,255,255,0.45)"
+              stroke-width="1"
+            />
+          </svg>
+          <div class="heading-copy">
+            <p class="eyebrow">What's Inside</p>
+            <h2 class="heading-title">
+              Experience the <span class="accent">Features</span>
+            </h2>
+          </div>
+          <svg
+            class="cf-mark cf-mark--br"
+            viewBox="0 0 140 40"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <polyline
+              points="140,0 116,28 0,28"
+              fill="none"
+              stroke="rgba(255,255,255,0.45)"
+              stroke-width="1"
+            />
+          </svg>
+        </div>
+
+        <!-- Stage + grid share one box: grid appears where the bike was -->
+        <div class="features-body" id="featuresBody">
+          <!-- Stage: centered bike + glassy explore button -->
+          <div class="features-stage" id="featuresStage">
+            <img
+              src="images/XE foldable Cutting.webp"
+              alt="Svitch folding electric cycle"
+              class="features-bike"
+            />
+            <button
+              class="feature-toggle"
+              id="featuresToggle"
+              type="button"
+              aria-expanded="false"
+            >
+              <span class="ft-ring" aria-hidden="true"></span>
+              <span class="ft-label">Explore Features</span>
+            </button>
+          </div>
+
+          <!-- Grid: replaces the bike once explored -->
+          <div class="features-grid" id="featuresGrid" aria-hidden="true">
+            <article class="feature-card">
+              <div class="feature-card-media">
+                <img src="images/Suspension Seat.webp" alt="Suspension Seat" />
+              </div>
+              <h3 class="feature-card-name">Suspension Seat</h3>
+              <p class="feature-card-desc">
+                Shock-absorbing saddle post for a smooth, cushioned ride.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-card-media">
+                <img src="images/LITE XE Display.webp" alt="XE Smart Display" />
+              </div>
+              <h3 class="feature-card-name">XE Smart Display</h3>
+              <p class="feature-card-desc">
+                Speed, range and assist level at a glance.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-card-media">
+                <img src="images/Battery.webp" alt="Lithium Battery" />
+              </div>
+              <h3 class="feature-card-name">Lithium Battery</h3>
+              <p class="feature-card-desc">
+                Removable, key-locked pack — charge it anywhere.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-card-media">
+                <img src="images/Svitch XE Motor.webp" alt="XE Hub Motor" />
+              </div>
+              <h3 class="feature-card-name">XE Hub Motor</h3>
+              <p class="feature-card-desc">
+                Rear hub drive delivering smooth, confident power.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-card-media">
+                <img src="images/Padel Assist png.webp" alt="Pedal Assist" />
+              </div>
+              <h3 class="feature-card-name">Pedal Assist</h3>
+              <p class="feature-card-desc">
+                Multi-level cadence sensing tuned to your ride.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-card-media">
+                <img src="images/DishBreak.webp" alt="Disc Brakes" />
+              </div>
+              <h3 class="feature-card-name">Disc Brakes</h3>
+              <p class="feature-card-desc">
+                Dual-disc braking for reliable stopping power.
+              </p>
+            </article>
+            <button class="features-close" id="featuresClose" type="button">
+              ← Back to the bike
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4 — SVITCH MERCHANDISE --->
+    <section class="merch" id="merch" aria-label="Svitch merchandise">
+      <div class="container">
+        <!-- Heading — corner-frame, title left + desc right (matches Section 2) -->
+        <div class="merch-head heading-frame">
+          <svg
+            class="cf-mark cf-mark--tl"
+            viewBox="0 0 140 40"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <polyline
+              points="0,40 24,12 140,12"
+              fill="none"
+              stroke="rgba(255,255,255,0.45)"
+              stroke-width="1"
+            />
+          </svg>
+          <div class="merch-head-inner">
+            <div class="heading-copy">
+              <p class="eyebrow">The Svitch Store</p>
+              <h2 class="heading-title">
+                Svitch <span class="accent">Merchandise</span>
+              </h2>
+            </div>
+            <p class="heading-desc">
+              Flaunt all of your moods, tints &amp; shades with some cool Svitch
+              Bike athleisure wear.
+            </p>
+          </div>
+          <svg
+            class="cf-mark cf-mark--br"
+            viewBox="0 0 140 40"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <polyline
+              points="140,0 116,28 0,28"
+              fill="none"
+              stroke="rgba(255,255,255,0.45)"
+              stroke-width="1"
+            />
+          </svg>
+        </div>
+        <div class="merch-carousel-wrap">
+          <div class="swiper merch-swiper" id="merchCarousel">
+            <div class="swiper-wrapper">
+              <div
+                class="swiper-slide merch-card"
+                data-name="Svitch TShirt Tee"
+                data-price="₹ 1,299"
+              >
+                <div
+                  class="merch-card-media"
+                  style="
+                    background-image: url(&quot;images/Merchendies/Black\ T-shirt\ 01.webp&quot;);
+                  "
+                ></div>
+                <div class="merch-card-titlebar">
+                  <h3 class="merch-card-name">Black Svitch TShirt</h3>
+                </div>
+                <div class="merch-card-below">
+                  <p class="merch-card-price">₹ 1,299</p>
+                  <button
+                    class="add-to-cart"
+                    type="button"
+                    aria-label="Add Svitch TShirt to cart"
+                  >
+                    <i class="bi bi-bag-plus"></i> Add to Cart
+                  </button>
+                </div>
+              </div>
+              <div
+                class="swiper-slide merch-card"
+                data-name="Svitch Cap"
+                data-price="₹ 799"
+              >
+                <div
+                  class="merch-card-media"
+                  style="
+                    background-image: url(&quot;images/Merchendies/svitch\ caps.webp&quot;);
+                  "
+                ></div>
+                <div class="merch-card-titlebar">
+                  <h3 class="merch-card-name">Svitch Cap</h3>
+                </div>
+                <div class="merch-card-below">
+                  <p class="merch-card-price">₹ 799</p>
+                  <button
+                    class="add-to-cart"
+                    type="button"
+                    aria-label="Add Svitch Cap to cart"
+                  >
+                    <i class="bi bi-bag-plus"></i> Add to Cart
+                  </button>
+                </div>
+              </div>
+              <div
+                class="swiper-slide merch-card"
+                data-name="Svitch Polo TShirt"
+                data-price="₹ 2,499"
+              >
+                <div
+                  class="merch-card-media"
+                  style="
+                    background-image: url(&quot;images/Merchendies/Blue\ polo.webp&quot;);
+                  "
+                ></div>
+                <div class="merch-card-titlebar">
+                  <h3 class="merch-card-name">Svitch Polo TShirt</h3>
+                </div>
+                <div class="merch-card-below">
+                  <p class="merch-card-price">₹ 1,299</p>
+                  <button
+                    class="add-to-cart"
+                    type="button"
+                    aria-label="Add Svitch Polo TShirt to cart"
+                  >
+                    <i class="bi bi-bag-plus"></i> Add to Cart
+                  </button>
+                </div>
+              </div>
+              <div
+                class="swiper-slide merch-card"
+                data-name="Svitch Tank"
+                data-price="₹ 599"
+              >
+                <div
+                  class="merch-card-media"
+                  style="
+                    background-image: url(&quot;images/Merchendies/Girl\ Tank.webp&quot;);
+                  "
+                ></div>
+                <div class="merch-card-titlebar">
+                  <h3 class="merch-card-name">Svitch Tank for Girls</h3>
+                </div>
+                <div class="merch-card-below">
+                  <p class="merch-card-price">₹ 899</p>
+                  <button
+                    class="add-to-cart"
+                    type="button"
+                    aria-label="Add Svitch Tank to cart"
+                  >
+                    <i class="bi bi-bag-plus"></i> Add to Cart
+                  </button>
+                </div>
+              </div>
+              <div
+                class="swiper-slide merch-card"
+                data-name="Svitch Hoodie"
+                data-price="₹ 3,499"
+              >
+                <div
+                  class="merch-card-media"
+                  style="
+                    background-image: url(&quot;images/Merchendies/Girls\ Hoodie\ 01.webp&quot;);
+                  "
+                ></div>
+                <div class="merch-card-titlebar">
+                  <h3 class="merch-card-name">Svitch Hoodie for Girls</h3>
+                </div>
+                <div class="merch-card-below">
+                  <p class="merch-card-price">₹ 1,199</p>
+                  <button
+                    class="add-to-cart"
+                    type="button"
+                    aria-label="Add Svitch Hoodie to cart"
+                  >
+                    <i class="bi bi-bag-plus"></i> Add to Cart
+                  </button>
+                </div>
+              </div>
+              <div
+                class="swiper-slide merch-card"
+                data-name="Svitch Crew"
+                data-price="₹ 1,899"
+              >
+                <div
+                  class="merch-card-media"
+                  style="
+                    background-image: url(&quot;images/Merchendies/svitch\ tshirts.webp&quot;);
+                  "
+                ></div>
+                <div class="merch-card-titlebar">
+                  <h3 class="merch-card-name">Svitch Tshirts</h3>
+                </div>
+                <div class="merch-card-below">
+                  <p class="merch-card-price">₹ 1,899</p>
+                  <button
+                    class="add-to-cart"
+                    type="button"
+                    aria-label="Add Svitch Crew to cart"
+                  >
+                    <i class="bi bi-bag-plus"></i> Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="merch-arrow merch-prev"
+            type="button"
+            aria-label="Previous"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="m14.5 5-7 7 7 7"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            class="merch-arrow merch-next"
+            type="button"
+            aria-label="Next"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="m9.5 5 7 7-7 7"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5 — SVITCH CYCLES (interactive bike showcase) -->
+    <section
+      class="cycles"
+      id="cycles"
+      aria-label="Svitch electric cycle showcase"
+    >
       <!-- Ambient red glow behind the bike -->
       <div class="hero-glow" aria-hidden="true"></div>
 
-      <div class="hero-head">
-        <p class="hero-eyebrow">The Svitch Fat-Tyre Folder</p>
-        <h1 class="hero-title">
-          Built <span class="accent">Different.</span>
-        </h1>
-        <p class="hero-sub">
-          Every part earns its place. Tap a marker to see what's inside.
-        </p>
+      <!-- Heading — corner-frame, eyebrow + title (house style) -->
+      <div class="hero-head heading-frame">
+        <svg
+          class="cf-mark cf-mark--tl"
+          viewBox="0 0 140 40"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <polyline
+            points="0,40 24,12 140,12"
+            fill="none"
+            stroke="rgba(255,255,255,0.45)"
+            stroke-width="1"
+          />
+        </svg>
+        <div class="hero-head-inner">
+          <div class="heading-copy">
+            <p class="eyebrow eyebrow-line">The Svitch Range</p>
+            <h2 class="heading-title">
+              Explore Our <span class="accent">Cycles</span>
+            </h2>
+          </div>
+          <p class="heading-desc">
+            Every part earns its place. Tap a marker on the bike to see what's
+            inside.
+          </p>
+        </div>
+        <svg
+          class="cf-mark cf-mark--br"
+          viewBox="0 0 140 40"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <polyline
+            points="140,0 116,28 0,28"
+            fill="none"
+            stroke="rgba(255,255,255,0.45)"
+            stroke-width="1"
+          />
+        </svg>
       </div>
+
       <div class="bike-stage" id="bikeStage">
         <img
           src="images/Red View.webp"
@@ -186,361 +874,88 @@
       </div>
     </section>
 
-    <!-- SECTION 2 — PRODUCTS CAROUSEL -->
-    <section class="products" id="products" aria-label="Svitch product lineup">
-      <div class="products-pin" id="productsPin">
-        <div class="products-sticky">
-        <!-- Heading — corner-frame big heading -->
-        <div class="products-head heading-frame">
-          <svg class="cf-mark cf-mark--tl" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden="true">
-            <polyline points="0,40 24,12 140,12" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
-          </svg>
-          <div class="products-head-inner">
-            <div class="heading-copy">
-              <p class="eyebrow">The Svitch Lineup</p>
-              <h2 class="heading-title">Built To <span class="accent">Move You</span></h2>
-            </div>
-            <p class="heading-desc">
-              Every e-cycle is engineered for the Indian road. Scroll to explore
-              the range
-            </p>
-          </div>
-          <svg class="cf-mark cf-mark--br" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden="true">
-            <polyline points="140,0 116,28 0,28" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
-          </svg>
-        </div>
-
-        <div class="products-viewport">
-          <div class="products-track" id="productsTrack">
-            <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/products/handpainted/Gujarat.webp" alt="Svitch Handpainted" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch Handpainted</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 59,999</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Handpainted to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-
-            <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/products/lite xe/Lite.webp" alt="Svitch Lite XE" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch Lite XE</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 44,999</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Lite XE   to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-
-            <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/products/Mxe/MXE.webp" alt="Svitch MXE" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch MXE</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 52,999</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch MXE to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-
-            <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/products/Brorix_07.webp" alt="Svitch Brorix 7" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch Brorix 7</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 27,999</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Brorix 7 to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-
-               <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/products/Elegon.webp" alt="Svitch Elegon 7" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch Elegon 7</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 30,999</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Elegon 7 to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-
-               <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/products/Velono.webp" alt="Svitch Velona" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch Velona</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 29,999</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Velona to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-
-             <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/Battery.webp" alt="Svitch Power Pack" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch Power Pack</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 24,999</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Power Pack to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-             <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/DishBreak.webp" alt="Svitch Power Pack" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch Disk Break</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 15,000</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Disk Break to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-             <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/XE-Display.webp" alt="Svitch Display" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch Display</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 20,999</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Display to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-             <article class="pcard">
-              <div class="pcard-media">
-                <img src="images/Svitch XE Motor.webp" alt="Svitch Motor" />
-              </div>
-              <div class="pcard-body">
-                <h3 class="pcard-name">Svitch Motor</h3>
-                <div class="pcard-price-row">
-                  <p class="pcard-price">₹ 18,999</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Motor to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3 — FEATURES (bike + explore toggle → feature grid) -->
-    <section class="features" id="technology" aria-label="Svitch advanced features">
-      <div class="features-inner">
-        <!-- Heading — corner-frame style, matches the products heading -->
-        <div class="features-head heading-frame">
-          <svg class="cf-mark cf-mark--tl" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden="true">
-            <polyline points="0,40 24,12 140,12" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
-          </svg>
-          <div class="heading-copy">
-            <p class="eyebrow">What's Inside</p>
-            <h2 class="heading-title">Experience the <span class="accent">Features</span></h2>
-          </div>
-          <svg class="cf-mark cf-mark--br" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden="true">
-            <polyline points="140,0 116,28 0,28" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
-          </svg>
-        </div>
-
-        <!-- Stage + grid share one box: grid appears where the bike was -->
-        <div class="features-body" id="featuresBody">
-          <!-- Stage: centered bike + glassy explore button -->
-          <div class="features-stage" id="featuresStage">
-            <img
-              src="images/XE foldable Cutting.webp"
-              alt="Svitch folding electric cycle"
-              class="features-bike"
-            />
-            <button class="feature-toggle" id="featuresToggle" type="button" aria-expanded="false">
-              <span class="ft-ring" aria-hidden="true"></span>
-              <span class="ft-label">Explore Features</span>
-            </button>
-          </div>
-
-          <!-- Grid: replaces the bike once explored -->
-          <div class="features-grid" id="featuresGrid" aria-hidden="true">
-            <article class="feature-card">
-              <div class="feature-card-media"><img src="images/Suspension Seat.webp" alt="Suspension Seat" /></div>
-              <h3 class="feature-card-name">Suspension Seat</h3>
-              <p class="feature-card-desc">Shock-absorbing saddle post for a smooth, cushioned ride.</p>
-            </article>
-            <article class="feature-card">
-              <div class="feature-card-media"><img src="images/LITE XE Display.webp" alt="XE Smart Display" /></div>
-              <h3 class="feature-card-name">XE Smart Display</h3>
-              <p class="feature-card-desc">Speed, range and assist level at a glance.</p>
-            </article>
-            <article class="feature-card">
-              <div class="feature-card-media"><img src="images/Battery.webp" alt="Lithium Battery" /></div>
-              <h3 class="feature-card-name">Lithium Battery</h3>
-              <p class="feature-card-desc">Removable, key-locked pack — charge it anywhere.</p>
-            </article>
-            <article class="feature-card">
-              <div class="feature-card-media"><img src="images/Svitch XE Motor.webp" alt="XE Hub Motor" /></div>
-              <h3 class="feature-card-name">XE Hub Motor</h3>
-              <p class="feature-card-desc">Rear hub drive delivering smooth, confident power.</p>
-            </article>
-            <article class="feature-card">
-              <div class="feature-card-media"><img src="images/Padel Assist png.webp" alt="Pedal Assist" /></div>
-              <h3 class="feature-card-name">Pedal Assist</h3>
-              <p class="feature-card-desc">Multi-level cadence sensing tuned to your ride.</p>
-            </article>
-            <article class="feature-card">
-              <div class="feature-card-media"><img src="images/DishBreak.webp" alt="Disc Brakes" /></div>
-              <h3 class="feature-card-name">Disc Brakes</h3>
-              <p class="feature-card-desc">Dual-disc braking for reliable stopping power.</p>
-            </article>
-            <button class="features-close" id="featuresClose" type="button">← Back to the bike</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 4 — SVITCH MERCHANDISE --->
-    <section class="merch" id="merch" aria-label="Svitch merchandise">
-      <div class="container">
-        <!-- Heading — corner-frame, title left + desc right (matches Section 2) -->
-        <div class="merch-head heading-frame">
-          <svg class="cf-mark cf-mark--tl" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden="true">
-            <polyline points="0,40 24,12 140,12" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
-          </svg>
-          <div class="merch-head-inner">
-            <div class="heading-copy">
-              <p class="eyebrow">The Svitch Store</p>
-              <h2 class="heading-title">Svitch <span class="accent">Merchandise</span></h2>
-            </div>
-            <p class="heading-desc">
-              Flaunt all of your moods, tints &amp; shades with some cool
-              Svitch Bike athleisure wear.
-            </p>
-          </div>
-          <svg class="cf-mark cf-mark--br" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden="true">
-            <polyline points="140,0 116,28 0,28" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
-          </svg>
-        </div>
-        <div class="merch-carousel-wrap">
-          <div class="swiper merch-swiper" id="merchCarousel">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide merch-card" data-name="Svitch TShirt Tee" data-price="₹ 1,299">
-                <div class="merch-card-media" style="background-image:url('images/Merchendies/Black\ T-shirt\ 01.webp')"></div>
-                <div class="merch-card-titlebar">
-                  <h3 class="merch-card-name">Black Svitch TShirt</h3>
-                </div>
-                <div class="merch-card-below">
-                  <p class="merch-card-price">₹ 1,299</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch TShirt to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-              <div class="swiper-slide merch-card" data-name="Svitch Cap" data-price="₹ 799">
-                <div class="merch-card-media" style="background-image:url('images/Merchendies/svitch\ caps.webp')"></div>
-                <div class="merch-card-titlebar">
-                  <h3 class="merch-card-name">Svitch Cap</h3>
-                </div>
-                <div class="merch-card-below">
-                  <p class="merch-card-price">₹ 799</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Cap to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-              <div class="swiper-slide merch-card" data-name="Svitch Polo TShirt" data-price="₹ 2,499">
-                <div class="merch-card-media" style="background-image:url('images/Merchendies/Blue\ polo.webp')"></div>
-                <div class="merch-card-titlebar">
-                  <h3 class="merch-card-name">Svitch Polo TShirt</h3>
-                </div>
-                <div class="merch-card-below">
-                  <p class="merch-card-price">₹ 1,299</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Polo TShirt to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-              <div class="swiper-slide merch-card" data-name="Svitch Tank" data-price="₹ 599">
-                <div class="merch-card-media" style="background-image:url('images/Merchendies/Girl\ Tank.webp')"></div>
-                <div class="merch-card-titlebar">
-                  <h3 class="merch-card-name">Svitch Tank for Girls</h3>
-                </div>
-                <div class="merch-card-below">
-                  <p class="merch-card-price">₹ 899</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Tank to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-              <div class="swiper-slide merch-card" data-name="Svitch Hoodie" data-price="₹ 3,499">
-                <div class="merch-card-media" style="background-image:url('images/Merchendies/Girls\ Hoodie\ 01.webp')"></div>
-                <div class="merch-card-titlebar">
-                  <h3 class="merch-card-name">Svitch Hoodie for Girls</h3>
-                </div>
-                <div class="merch-card-below">
-                  <p class="merch-card-price">₹ 1,199</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Hoodie to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-              <div class="swiper-slide merch-card" data-name="Svitch Crew" data-price="₹ 1,899">
-                <div class="merch-card-media" style="background-image:url('images/Merchendies/svitch\ tshirts.webp')"></div>
-                <div class="merch-card-titlebar">
-                  <h3 class="merch-card-name">Svitch Tshirts</h3>
-                </div>
-                <div class="merch-card-below">
-                  <p class="merch-card-price">₹ 1,899</p>
-                  <button class="add-to-cart" type="button" aria-label="Add Svitch Crew to cart"><i class="bi bi-bag-plus"></i> Add to Cart</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button class="merch-arrow merch-prev" type="button" aria-label="Previous">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button class="merch-arrow merch-next" type="button" aria-label="Next">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 5 — SVITCH STORIES -->
+    <!-- SECTION 6 — SVITCH STORIES -->
     <section class="stories" id="stories" aria-label="Svitch stories gallery">
       <div class="stories-scroll" id="storiesScroll">
         <div class="stories-sticky">
           <div class="container">
             <div class="stories-head heading-frame">
-              <svg class="cf-mark cf-mark--tl" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden="true">
-                <polyline points="0,40 24,12 140,12" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
+              <svg
+                class="cf-mark cf-mark--tl"
+                viewBox="0 0 140 40"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <polyline
+                  points="0,40 24,12 140,12"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.45)"
+                  stroke-width="1"
+                />
               </svg>
               <div class="stories-head-inner">
                 <div class="heading-copy">
                   <p class="eyebrow">Ride The Journey</p>
-                  <h2 class="heading-title">Svitch <span class="accent">Stories</span></h2>
+                  <h2 class="heading-title">
+                    Svitch <span class="accent">Stories</span>
+                  </h2>
                 </div>
                 <p class="heading-desc">
-                  Growth, customers and products — every frame is a chapter of the
-                  ride so far.
+                  Growth, customers and products — every frame is a chapter of
+                  the ride so far.
                 </p>
               </div>
-              <svg class="cf-mark cf-mark--br" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden="true">
-                <polyline points="140,0 116,28 0,28" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
+              <svg
+                class="cf-mark cf-mark--br"
+                viewBox="0 0 140 40"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <polyline
+                  points="140,0 116,28 0,28"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.45)"
+                  stroke-width="1"
+                />
               </svg>
             </div>
           </div>
           <div class="stories-viewport">
-            <div class="stories-card"><img src="./images/Stories/slide.webp" alt="Svitch story 1" loading="lazy" /></div>
-            <div class="stories-card"><img src="./images/Stories/slide1.webp" alt="Svitch story 2" loading="lazy" /></div>
-            <div class="stories-card"><img src="./images/Stories/slide2.webp" alt="Svitch story 3" loading="lazy" /></div>
-            <div class="stories-card"><img src="./images/Stories/slide3.webp" alt="Svitch story 4" loading="lazy" /></div>
-            <div class="stories-card"><img src="./images/Stories/slide4.webp" alt="Svitch story 5" loading="lazy" /></div>
+            <div class="stories-card">
+              <img
+                src="./images/Stories/slide.webp"
+                alt="Svitch story 1"
+                loading="lazy"
+              />
+            </div>
+            <div class="stories-card">
+              <img
+                src="./images/Stories/slide1.webp"
+                alt="Svitch story 2"
+                loading="lazy"
+              />
+            </div>
+            <div class="stories-card">
+              <img
+                src="./images/Stories/slide2.webp"
+                alt="Svitch story 3"
+                loading="lazy"
+              />
+            </div>
+            <div class="stories-card">
+              <img
+                src="./images/Stories/slide3.webp"
+                alt="Svitch story 4"
+                loading="lazy"
+              />
+            </div>
+            <div class="stories-card">
+              <img
+                src="./images/Stories/slide4.webp"
+                alt="Svitch story 5"
+                loading="lazy"
+              />
+            </div>
             <!-- <div class="stories-card"><img src="./images/Stories/slide.jpg" alt="Svitch story 6" loading="lazy" /></div>
             <div class="stories-card"><img src="./images/Stories/slide.jpg" alt="Svitch story 7" loading="lazy" /></div>
             <div class="stories-card"><img src="./images/Stories/slide.jpg" alt="Svitch story 8" loading="lazy" /></div>
@@ -558,9 +973,7 @@
           <div class="footer-brand">
             <div class="footer-brand-row">
               <a href="#hero" class="footer-logo-link"
-                ><img
-                  src="images/logos/Svitch (1).webp"
-                  alt="Svitch Bike"
+                ><img src="images/logos/Svitch (1).webp" alt="Svitch Bike"
               /></a>
               <p class="footer-desc">
                 Bold design. Green energy. Built to move you.
@@ -687,7 +1100,14 @@
 
     <!-- Merch zoom lightbox -->
     <div class="merch-zoom" id="merchZoom" aria-hidden="true">
-      <button class="merch-zoom-close" id="merchZoomClose" type="button" aria-label="Close">×</button>
+      <button
+        class="merch-zoom-close"
+        id="merchZoomClose"
+        type="button"
+        aria-label="Close"
+      >
+        ×
+      </button>
       <figure class="merch-zoom-figure">
         <img id="merchZoomImg" src="" alt="" />
         <figcaption>
@@ -703,4 +1123,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-

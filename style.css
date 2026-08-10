@@ -424,9 +424,28 @@ body.menu-open { overflow: hidden; }
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - var(--header-h) - var(--announce-h));
-    padding: 32px 24px 44px;
+    justify-content: flex-start;
+    padding: 0;
+    background: var(--black);
+    overflow: hidden;
+}
+
+/* Top banner section (was the old hero) — the auto banner carousel is
+   the first section on the page, full-width. Bottom padding gives the
+   gap down into the Products slider. */
+.hero-banner-section { width: 100%; padding-bottom: 56px; }
+@media (max-width: 720px) {
+    .hero-banner-section { padding-bottom: 32px; }
+}
+
+/* The moved-down cycle showcase (after Merch) — red bike + hotspots. */
+.cycles {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--section-gap) 24px calc(var(--section-gap) + 24px);
     background: var(--black);
     overflow: hidden;
 }
@@ -436,7 +455,7 @@ body.menu-open { overflow: hidden; }
 .hero-glow {
     position: absolute;
     left: 50%;
-    top: 52%;
+    top: 55%;
     width: min(1100px, 120vw);
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
@@ -449,38 +468,133 @@ body.menu-open { overflow: hidden; }
     pointer-events: none;
 }
 
+/* ——— Cycles heading (corner-frame house style) ——— */
 .hero-head {
     position: relative;
     z-index: 2;
-    text-align: center;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto 34px;
+    padding: 26px 0 8px;
 }
+.hero-head.heading-frame .cf-mark--tl { top: 4px; left: -25px; }
+.hero-head.heading-frame .cf-mark--br { bottom: -14px; right: -25px; }
 
-.hero-eyebrow {
-    color: var(--red-lit);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
+.hero-head-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px 48px;
 }
-
-.hero-title {
-    font-size: clamp(46px, 8.5vw, 104px);
-    font-weight: 700;
-    line-height: 0.95;
-    letter-spacing: -1.5px;
-    text-transform: uppercase;
+.hero-head .heading-copy { min-width: 0; }
+.hero-head .heading-copy .eyebrow { margin-bottom: 16px; letter-spacing: 4.5px; }
+.hero-head .heading-copy .heading-title {
+    font-size: clamp(30px, 3.6vw, 46px);
+    line-height: 1.08;
 }
-
-.hero-title .accent { color: var(--red-lit); }
-
-.hero-sub {
-    max-width: 440px;
-    margin: 10px auto 0;
+.hero-head .heading-desc {
+    flex: 0 1 auto;
+    max-width: 380px;
+    font-size: 15px;
+    line-height: 1.7;
     color: var(--text-soft);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.4;
+    text-align: right;
+    margin: 0;
+}
+
+/* White-line eyebrow — short white rule before the label, distinct from
+   the red eyebrows used elsewhere ("white line eyebrows"). */
+.hero-head .heading-copy .eyebrow-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--white);
+}
+.hero-head .heading-copy .eyebrow-line::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    background: var(--white);
+    flex: none;
+}
+
+/* ——— Hero banner carousel ———
+   Centered to a comfortable max width so the banner never opens as a huge
+   wall of image on big monitors, while the slide keeps its NATURAL aspect
+   ratio — the image is never cropped, shrunk-non-uniformly or letterboxed.
+   The page-control dots sit in the bottom-right corner, each carrying a
+   progress fill so you can see when the next slide fires. No side arrows. */
+.hero-banner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+.hero-banner-swiper { width: 100%; }
+.hero-banner-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+}
+.hero-banner-slide img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+}
+
+/* Bottom-right indicator pills, sitting over the banner image. Active pill
+   shows a progress fill across the autoplay delay so you see when the
+   slide changes. Clickable to jump to a slide. `left:auto; width:auto`
+   overrides Swiper's default full-width centering so the row hugs the
+   bottom-right corner and never touches the edges. */
+.hero-banner-pagination {
+    position: absolute;
+    left: auto;
+    right: 28px;
+    bottom: 24px;
+    width: auto;
+    z-index: 5;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+.hero-banner-pagination .swiper-pagination-bullet {
+    position: relative;
+    width: 40px;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.35);
+    opacity: 1;
+    margin: 0 !important;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Match the exact Swiper pagination rule you tuned in DevTools
+   (`left: -29px`, full width). Written here with higher specificity so it
+   permanently overrides the CDN's `left:0; width:100%` centering. */
+.hero-banner-pagination.swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: var(--swiper-pagination-bottom, 10px);
+    top: var(--swiper-pagination-top, auto);
+    left: -29px;
+    width: 100%;
+}
+.hero-banner-pagination .banner-progress-fill {
+    position: absolute;
+    inset: 0;
+    width: 0;
+    background: var(--red-lit);
+}
+.hero-banner-pagination .swiper-pagination-bullet-active .banner-progress-fill {
+    animation: banner-progress 3.2s linear forwards;
+}
+@keyframes banner-progress {
+    from { width: 0; }
+    to   { width: 100%; }
 }
 
 /* —— Bike stage ——
@@ -666,14 +780,11 @@ body.menu-open { overflow: hidden; }
     letter-spacing: 1px;
     text-align: center;
 }
-.hero-title .char{
-    display:inline-block;
-    will-change:transform;
-}
+.hero-title .char,
+.hero-head .heading-title .char { display: inline-block; will-change: transform; }
 
-.hero-title .accent{
-    color:#AD0101;
-}
+.hero-title .accent,
+.hero-head .heading-title .accent { color: #AD0101; }
 /* ============================================= */
 /* RESPONSIVE                                    */
 /* ============================================= */
@@ -761,13 +872,15 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 720px) {
     .announce-text { font-size: 10px; letter-spacing: 1px; gap: 9px; }
 
-    .hero { padding: 26px 16px 40px; }
-    .hero-eyebrow { font-size: 11px; letter-spacing: 3px; margin-bottom: 8px; }
+    .hero { padding: 0; }
+    .hero-banner-pagination { right: 16px; bottom: 14px; gap: 6px; }
+    .cycles { padding: 36px 16px 52px; }
+    .hero-head { margin-bottom: 22px; }
+    .hero-head .heading-copy .eyebrow { letter-spacing: 2.5px; font-size: 11px; }
+    .hero-head .heading-copy .heading-title { font-size: clamp(24px, 6.5vw, 30px); }
+    .hero-head-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .hero-head .heading-desc { text-align: left; max-width: 100%; }
 
-    /* Title adapts to screen width — smaller base so nothing wraps ugly */
-    .hero-title { font-size: clamp(32px, 9.5vw, 52px); letter-spacing: -1px; }
-
-    .hero-sub { font-size: 14px; max-width: 320px; }
     .bike-stage { width: 100%; }
 
     /* At phone width a 190px card can't sit beside a hotspot — it gets
@@ -859,8 +972,10 @@ body {
 
 /* —— Hero title: chars are separate blocks so the wave can move each one —— */
 .hero-title .word,
-.hero-title .char { display: inline-block; white-space: pre; }
-.hero-title .char { will-change: transform, color, opacity; }
+.hero-title .char,
+.hero-head .heading-title .char { display: inline-block; white-space: pre; }
+.hero-title .char,
+.hero-head .heading-title .char { will-change: transform, color, opacity; }
 
 /* ============================================================ */
 /* CONTAINER — shared width constraint (house style)            */
@@ -1252,7 +1367,7 @@ body {
     position: relative;
     padding: 24px 0 22px;
 }
-.features-head .cf-mark--tl { top: 8px; left: -22px; }
+.features-head .cf-mark--tl { top: 4px; left: -22px; }
 .features-head .cf-mark--br { bottom: 8px; right: 16px; }
 .features-head .heading-copy .eyebrow { margin-bottom: 10px; }
 .features-head .heading-copy .heading-title { font-size: clamp(30px, 3.8vw, 46px); }
@@ -1741,7 +1856,7 @@ body {
 /* Heading — corner-frame, title left + desc right (same as others) */
 .stories-head {
     position: relative;
-    padding: 26px 0 30px;
+    padding: 36px 0 44px;
     margin-bottom: 0;
 }
 .stories-head .cf-mark--tl { top: 4px; left: -22px; }
