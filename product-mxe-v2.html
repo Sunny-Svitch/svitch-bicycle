@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Svitch MXE — Draft B2 · Kinetic Build</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+
+    <style>
+      :root {
+        --red: #ad0101;
+        --red-lit: #d40202;
+        --black: #000;
+        --white: #fff;
+        --surface: #0b0b0d;
+        --surface-2: #141417;
+        --line: rgba(255, 255, 255, 0.1);
+        --text-soft: rgba(255, 255, 255, 0.6);
+        --text-dim: rgba(255, 255, 255, 0.4);
+        --font-display: "Barlow", "Century Gothic", Verdana, Arial, sans-serif;
+        --font-heading: "Rajdhani", "Barlow", sans-serif;
+        --font-body: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+        /* Section rhythm — one pair of values drives every block on the page,
+           and the same pair is used in product-lite-xe-v2.html so the two
+           drafts breathe identically. Change here, not per-section. */
+        --sec: clamp(40px, 5vw, 68px);
+        --sec-lg: clamp(52px, 6.5vw, 92px);
+        --sec-sm: clamp(24px, 3.2vw, 42px);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; background: var(--black); color: var(--white);
+        font-family: var(--font-body); -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      img { display: block; max-width: 100%; }
+      .wrap { max-width: 1320px; margin: 0 auto; padding: 0 26px; }
+      .draft-note {
+        position: relative; z-index: 200;
+        padding: 10px 26px; font-size: 12.5px; color: var(--text-dim);
+        background: var(--surface-2); border-bottom: 1px solid var(--line);
+      }
+      .draft-note b { color: var(--red-lit); font-weight: 600; }
+
+      .mask { overflow: hidden; display: inline-block; }
+      .char, .word { display: inline-block; will-change: transform; }
+      .accent { color: var(--red-lit); }
+      .eyebrow {
+        display: inline-flex; align-items: center; gap: 12px; margin: 0 0 18px;
+        font-family: var(--font-heading); font-size: 12px; font-weight: 600;
+        letter-spacing: 5px; text-transform: uppercase;
+      }
+      .eyebrow::before { content: ""; width: 30px; height: 2px; background: var(--red-lit); }
+
+      .btn {
+        position: relative; display: inline-flex; align-items: center; gap: 10px;
+        padding: 17px 34px; border: 0; border-radius: 4px; cursor: pointer;
+        font-family: var(--font-heading); font-size: 13px; font-weight: 700;
+        letter-spacing: 1.8px; text-transform: uppercase; text-decoration: none;
+        color: var(--white); background: var(--red); overflow: hidden;
+      }
+      .btn span { position: relative; z-index: 2; }
+      .btn::after {
+        content: ""; position: absolute; inset: 0; z-index: 1; background: var(--red-lit);
+        transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease);
+      }
+      .btn:hover::after { transform: scaleX(1); }
+      .btn-ghost { background: transparent; border: 1px solid var(--line); }
+      .btn-ghost::after { background: rgba(255,255,255,.1); }
+
+      /* ═══════════ 1. HERO — outline type that fills ═══════════ */
+      .hero { position: relative; height: 200vh; }
+      .hero-sticky {
+        position: sticky; top: 0; height: 100vh; overflow: hidden;
+        display: grid; place-items: center;
+      }
+      .hero-word {
+        position: absolute; z-index: 1; text-align: center; width: 100%;
+        font-family: var(--font-display); font-weight: 900;
+        font-size: clamp(90px, 27vw, 420px); line-height: .8; letter-spacing: -.05em;
+        pointer-events: none;
+      }
+      /* Two stacked copies: a hollow outline, and a solid one revealed by a
+         clip-path the scroll drives — the word literally fills in. */
+      .hero-word .hollow { color: transparent; -webkit-text-stroke: 2px rgba(255,255,255,.22); }
+      .hero-word .solid {
+        position: absolute; inset: 0; color: var(--red);
+        clip-path: inset(100% 0 0 0);
+      }
+      .hero-bike {
+        position: relative; z-index: 2; width: min(760px, 88vw);
+        will-change: transform;
+      }
+      .hero-meta {
+        position: absolute; left: 0; right: 0; bottom: 6vh; z-index: 3;
+        display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+        padding: 0 clamp(20px, 5vw, 60px);
+        font-family: var(--font-heading); font-size: 12px; letter-spacing: 3px;
+        text-transform: uppercase; color: var(--text-dim);
+      }
+      .hero-tag {
+        position: absolute; top: 14vh; left: 50%; transform: translateX(-50%); z-index: 3;
+        text-align: center;
+      }
+      .hero-tag h1 {
+        margin: 0; font-family: var(--font-display); font-weight: 800;
+        font-size: clamp(20px, 2.6vw, 34px); letter-spacing: -.01em;
+      }
+
+      /* ═══════════ 2. EXPLODED BUILD ═══════════ */
+      .build { position: relative; height: 360vh; background: var(--surface); }
+      .build-sticky {
+        position: sticky; top: 0; height: 100vh; overflow: hidden;
+        display: grid; place-items: center;
+      }
+      .build-head {
+        position: absolute; top: 9vh; left: 50%; transform: translateX(-50%);
+        text-align: center; z-index: 4; width: min(620px, 90vw);
+      }
+      .build-head h2 {
+        margin: 0 0 10px; font-family: var(--font-display); font-weight: 900;
+        font-size: clamp(28px, 4.4vw, 60px); line-height: 1; letter-spacing: -.03em;
+      }
+      .build-head p { margin: 0; font-size: 14px; color: var(--text-soft); }
+      .build-stage { position: relative; width: min(880px, 92vw); aspect-ratio: 1 / .72; }
+      .build-core {
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+        width: 54%; z-index: 2;
+      }
+      /* Parts start scattered off-centre and converge onto the bike as the
+         section is scrubbed — positions are set per-part in JS. */
+      .part {
+        position: absolute; width: 15%; z-index: 3;
+        will-change: transform, opacity;
+      }
+      .part img {
+        width: 100%; filter: drop-shadow(0 10px 26px rgba(0,0,0,.6));
+      }
+      .part span {
+        display: block; margin-top: 8px; text-align: center;
+        font-family: var(--font-heading); font-size: 10.5px; letter-spacing: 2.2px;
+        text-transform: uppercase; color: var(--text-dim); white-space: nowrap;
+      }
+
+      /* ═══════════ 3. TICKER ═══════════ */
+      .ticker {
+        padding: 16px 0; overflow: hidden;
+        background: var(--red); border-block: 1px solid rgba(0,0,0,.3);
+      }
+      .ticker-track { display: flex; gap: 34px; width: max-content; will-change: transform; }
+      .ticker-track span {
+        font-family: var(--font-display); font-weight: 800; font-size: clamp(15px, 2vw, 26px);
+        letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+        display: inline-flex; align-items: center; gap: 34px;
+      }
+      .ticker-track span::after { content: "◆"; font-size: .6em; opacity: .6; }
+
+      /* ═══════════ 4. SPLIT SCROLL STORY ═══════════ */
+      .story { background: var(--black); }
+      .story-row {
+        display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+        gap: clamp(24px, 5vw, 70px); padding: var(--sec) 0;
+      }
+      .story-row:nth-child(even) .story-media { order: -1; }
+      .story-media { overflow: hidden; border-radius: 18px; }
+      .story-media img { width: 100%; will-change: transform; }
+      .story-copy h3 {
+        margin: 0 0 14px; font-family: var(--font-display); font-weight: 900;
+        font-size: clamp(26px, 4vw, 52px); line-height: 1.02; letter-spacing: -.03em;
+      }
+      .story-copy p { margin: 0; font-size: 15px; line-height: 1.75; color: var(--text-soft); max-width: 440px; }
+      .story-idx {
+        font-family: var(--font-heading); font-size: 12px; letter-spacing: 4px;
+        color: var(--red-lit); display: block; margin-bottom: 14px;
+      }
+
+      /* ═══════════ 5. CONFIG STRIP ═══════════ */
+      .cfg { position: relative; padding: var(--sec) 0; overflow: hidden; transition: background 1s var(--ease); }
+      .cfg-inner { display: grid; grid-template-columns: 1.15fr .85fr; gap: 50px; align-items: center; }
+      .cfg-stage { display: grid; }
+      .cfg-stage img { grid-area: 1/1; width: 100%; opacity: 0; }
+      .cfg-stage img.is-on { opacity: 1; }
+      .cfg-name {
+        margin: 0 0 8px; font-family: var(--font-display); font-weight: 900;
+        font-size: clamp(28px, 4.4vw, 56px); line-height: 1; letter-spacing: -.03em;
+      }
+      .cfg-total {
+        margin: 0 0 26px; font-family: var(--font-display);
+        font-size: 30px; font-weight: 700;
+      }
+      .sw-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 30px; }
+      .sw {
+        width: 46px; height: 46px; padding: 0; display: grid; place-items: center; cursor: pointer;
+        background: transparent; border: 1px solid var(--line); border-radius: 50%;
+        transition: transform .3s var(--ease), border-color .3s var(--ease);
+      }
+      .sw:hover { transform: translateY(-3px); }
+      .sw[aria-pressed="true"] { border-color: var(--white); transform: scale(1.1); }
+      .sw i { width: 30px; height: 30px; border-radius: 50%; display: block; }
+      .addons { display: flex; flex-direction: column; gap: 9px; margin-bottom: 28px; }
+      .addon {
+        display: flex; align-items: center; gap: 13px; padding: 14px 17px; cursor: pointer;
+        background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px;
+        transition: border-color .25s var(--ease), background .25s var(--ease);
+      }
+      .addon.is-on { border-color: var(--red-lit); background: rgba(173,1,1,.12); }
+      .addon input { accent-color: var(--red-lit); width: 17px; height: 17px; flex: none; }
+      .addon-name { font-size: 14px; }
+      .addon-price { margin-left: auto; font-family: var(--font-display); font-weight: 700; font-size: 14.5px; }
+
+      /* ═══════════ 6. COMPARE ═══════════ */
+      .cmp-sec { padding: var(--sec) 0; border-top: 1px solid var(--line); }
+      .cmp { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 14.5px; }
+      .cmp th, .cmp td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--line); }
+      .cmp thead th {
+        font-family: var(--font-heading); font-size: 12px; letter-spacing: 2.4px;
+        text-transform: uppercase; color: var(--text-dim); font-weight: 600;
+      }
+      .cmp tbody th { font-weight: 400; color: var(--text-dim); }
+      .cmp .col-this { background: rgba(173,1,1,.1); font-weight: 600; }
+      .cmp thead .col-this { color: var(--white); }
+
+      /* ═══════════ 7. CTA ═══════════ */
+      .cta { padding: var(--sec-lg) 0; text-align: center; }
+      .cta h2 {
+        margin: 0 0 16px; font-family: var(--font-display); font-weight: 900;
+        font-size: clamp(38px, 8vw, 118px); line-height: .95; letter-spacing: -.045em;
+      }
+      .cta p { margin: 0 0 30px; font-size: 16px; color: var(--text-soft); }
+
+      @media (max-width: 900px) {
+        .hero { height: 160vh; }
+        .build { height: 300vh; }
+        .part { width: 20%; }
+        .part span { display: none; }
+        .story-row { grid-template-columns: 1fr; }
+        .story-row:nth-child(even) .story-media { order: 0; }
+        .cfg-inner { grid-template-columns: 1fr; }
+        .cmp { display: block; overflow-x: auto; white-space: nowrap; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero, .build { height: auto; }
+        .hero-sticky, .build-sticky { position: static; height: auto; padding: 60px 0; }
+        .hero-word .solid { clip-path: none; }
+        .part { position: static; width: 30%; display: inline-block; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <p class="draft-note">
+      <b>DRAFT B2 — MXE · “Kinetic Build”.</b> Harder, more graphic than A2.
+      The outline headline fills as you scroll while the bike stays put, then a
+      pinned exploded-assembly where the six real component images fly in and
+      land on the bike → colour config that re-tints the section → spec
+      comparison → red ticker band → alternating parallax story rows.
+    </p> -->
+
+    <!-- 1 ─── HERO ─── -->
+    <section class="hero" id="hero">
+      <div class="hero-sticky">
+        <div class="hero-word">
+          <span class="hollow">MXE</span>
+          <span class="solid" id="heroSolid">MXE</span>
+        </div>
+        <div class="hero-tag">
+          <p class="eyebrow" style="justify-content:center">Maximum Performance</p>
+          <h1 data-split-words>Ultimate Adventure</h1>
+        </div>
+        <img class="hero-bike" id="heroBike" src="images/products/Mxe/MXE orange.png" alt="Svitch MXE" />
+        <div class="hero-meta">
+          <span>36V · 250W BLDC</span>
+          <span>30–35 KM Range</span>
+          <span>7-SPD Shimano</span>
+          <span>₹66,500</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 ─── EXPLODED BUILD ─── -->
+    <section class="build" id="build">
+      <div class="build-sticky">
+        <div class="build-head">
+          <h2 data-split-words>Six parts, one machine</h2>
+          <p>Scroll to bring the MXE together.</p>
+        </div>
+        <div class="build-stage" id="buildStage">
+          <img class="build-core" id="buildCore" src="images/products/Mxe/MXE orange.png" alt="Svitch MXE frame" />
+          <!-- Real component images, already in the repo and used by the
+               hotspot map on the homepage. -->
+          <div class="part" data-x="-46" data-y="-34"><img src="images/Suspension Seat.webp" alt="" /><span>Suspension Seat</span></div>
+          <div class="part" data-x="42"  data-y="-38"><img src="images/LITE-XE-Display.webp" alt="" /><span>LCD Display</span></div>
+          <div class="part" data-x="52"  data-y="4"><img src="images/Battery.webp" alt="" /><span>8.7Ah Battery</span></div>
+          <div class="part" data-x="-52" data-y="10"><img src="images/Svitch XE Motor.webp" alt="" /><span>250W Hub Motor</span></div>
+          <div class="part" data-x="-34" data-y="40"><img src="images/Padel Assist png.webp" alt="" /><span>Pedal Assist</span></div>
+          <div class="part" data-x="36"  data-y="42"><img src="images/DishBreak.webp" alt="" /><span>Disc Brakes</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 ─── CONFIG ─── -->
+    <section class="cfg" id="cfg">
+      <div class="wrap cfg-inner">
+        <div class="cfg-stage" id="cfgStage">
+          <img src="images/products/Mxe/MXE orange.png" data-colour="orange" class="is-on" alt="MXE Tangerine Orange" />
+          <img src="images/products/Mxe/MXE Blue.png" data-colour="blue" loading="lazy" alt="MXE Ultramarine Tarzan" />
+        </div>
+        <div>
+          <p class="eyebrow">Build Yours</p>
+          <h2 class="cfg-name" id="cfgName">Tangerine Orange</h2>
+          <p class="cfg-total" id="cfgTotal">₹66,500</p>
+          <div class="sw-row" id="swRow">
+            <button class="sw" aria-pressed="true"  data-colour="orange" data-name="Tangerine Orange"   data-tint="226,98,27"><i style="background:#e2621b"></i></button>
+            <button class="sw" aria-pressed="false" data-colour="blue"   data-name="Ultramarine Tarzan" data-tint="31,63,150"><i style="background:#1f3f96"></i></button>
+          </div>
+          <div class="addons" id="addons">
+            <label class="addon"><input type="checkbox" data-price="2499" /><span class="addon-name">Rear Carrier + Fenders</span><span class="addon-price">+ ₹2,499</span></label>
+            <label class="addon"><input type="checkbox" data-price="1899" /><span class="addon-name">XE-1 Helmet</span><span class="addon-price">+ ₹1,899</span></label>
+            <label class="addon"><input type="checkbox" data-price="8999" /><span class="addon-name">Spare 8.7Ah Battery</span><span class="addon-price">+ ₹8,999</span></label>
+          </div>
+          <a href="#" class="btn"><span>Add To Cart</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 ─── COMPARE ─── -->
+    <section class="cmp-sec">
+      <div class="wrap">
+        <p class="eyebrow">Which One</p>
+        <h2 style="margin:0;font-family:var(--font-display);font-weight:900;font-size:clamp(28px,5vw,62px);line-height:1;letter-spacing:-.03em" data-split-words>
+          MXE vs Lite XE
+        </h2>
+        <table class="cmp">
+          <thead><tr><th></th><th class="col-this">Svitch MXE</th><th>Svitch Lite XE</th></tr></thead>
+          <tbody>
+            <tr><th>Price</th><td class="col-this">₹66,500</td><td>₹77,999</td></tr>
+            <tr><th>Motor</th><td class="col-this">36V 250W BLDC Hub</td><td>36V 250W BLDC Hub</td></tr>
+            <tr><th>Battery</th><td class="col-this">36V 8.7Ah Li-Ion</td><td>36V 10.4Ah Li-Ion</td></tr>
+            <tr><th>Range</th><td class="col-this">30–35 km</td><td>50–70 km</td></tr>
+            <tr><th>Brakes</th><td class="col-this">Mechanical</td><td>Mechanical</td></tr>
+            <tr><th>Lighting</th><td class="col-this">300 LUX LED</td><td>LED + brake-linked tail</td></tr>
+            <tr><th>Colours</th><td class="col-this">2</td><td>5</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5 ─── TICKER ─── -->
+    <div class="ticker"><div class="ticker-track" id="ticker"></div></div>
+
+    <!-- 6 ─── STORY ROWS ─── -->
+    <section class="story">
+      <div class="wrap">
+        <div class="story-row">
+          <div class="story-copy">
+            <span class="story-idx">01 — FOLD</span>
+            <h3 data-split-words>Fits where bikes don't</h3>
+            <p>Compact, light and folded in seconds. Lives in a flat, a car boot, or under a desk — no bike room required.</p>
+          </div>
+          <div class="story-media"><img src="images/products/Mxe/MXE1.webp" alt="MXE folded" loading="lazy" /></div>
+        </div>
+        <div class="story-row">
+          <div class="story-copy">
+            <span class="story-idx">02 — RIDE</span>
+            <h3 data-split-words>Dual suspension, real gears</h3>
+            <p>Front and rear travel takes the edge off broken tarmac, and 7-speed Shimano sits under the assist for climbs the motor shouldn't carry alone.</p>
+          </div>
+          <div class="story-media"><img src="images/products/Mxe/MXE Blue.png" alt="MXE riding" loading="lazy" /></div>
+        </div>
+        <div class="story-row">
+          <div class="story-copy">
+            <span class="story-idx">03 — SEE</span>
+            <h3 data-split-words>300 LUX after dark</h3>
+            <p>Bright enough to light unlit road, not just to be seen on it. The dynamic LCD keeps speed, battery and assist readable mid-traffic.</p>
+          </div>
+          <div class="story-media"><img src="images/LITE-XE-Display.webp" alt="MXE display" loading="lazy" /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 ─── CTA ─── -->
+    <section class="cta">
+      <div class="wrap">
+        <h2 data-split-words>Take it anywhere</h2>
+        <p>From ₹66,500 &nbsp;·&nbsp; or ₹2,771/mo for 24 months</p>
+        <a href="#" class="btn"><span>Add To Cart</span></a>
+      </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/ScrollTrigger.min.js"></script>
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const splitWords = (el) => {
+        const words = el.textContent.trim().split(/\s+/);
+        el.textContent = "";
+        return words.map((w, i) => {
+          const mask = document.createElement("span");
+          mask.className = "mask";
+          const span = document.createElement("span");
+          span.className = "word";
+          span.textContent = w;
+          mask.appendChild(span);
+          el.appendChild(mask);
+          if (i < words.length - 1) el.appendChild(document.createTextNode(" "));
+          return span;
+        });
+      };
+
+      document.querySelectorAll("[data-split-words]").forEach((el) => {
+        const words = splitWords(el);
+        if (reduced) return;
+        gsap.from(words, {
+          yPercent: 118, stagger: 0.075, duration: 0.9, ease: "power4.out",
+          scrollTrigger: { trigger: el, start: "top 88%" },
+        });
+      });
+
+      if (!reduced) {
+        /* ── 1. Hero — the outline word fills as you scroll, the bike pushes
+              back and fades so the type takes the screen. ── */
+        gsap.to("#heroSolid", {
+          clipPath: "inset(0% 0 0 0)", ease: "none",
+          scrollTrigger: { trigger: "#hero", start: "top top", end: "70% top", scrub: 0.4 },
+        });
+        /* The bike stays fully present for the whole pin — no fade, no
+           shrink. Only a barely-there drift so the frame isn't frozen while
+           the word fills behind it. */
+        gsap.fromTo(
+          "#heroBike",
+          { y: 0 },
+          {
+            y: "-2vh", ease: "none",
+            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom bottom", scrub: 0.4 },
+          },
+        );
+        gsap.from("#heroBike", { yPercent: 12, opacity: 0, duration: 1.2, ease: "expo.out" });
+
+        /* ── 2. Exploded build ──
+           Each part starts at its data-x/data-y offset (as a % of the stage,
+           so it scales with the viewport) and converges on the bike. The
+           scatter is set from the same numbers that drive the animation, so
+           there's no separate CSS to keep in sync. ── */
+        const parts = gsap.utils.toArray(".part");
+        const buildTl = gsap.timeline({
+          scrollTrigger: { trigger: "#build", start: "top top", end: "bottom bottom", scrub: 0.7 },
+        });
+
+        parts.forEach((p, i) => {
+          const x = +p.dataset.x, y = +p.dataset.y;
+          // Resting place: evenly ringed around the bike
+          gsap.set(p, { left: 50 + x * 0.62 + "%", top: 50 + y * 0.62 + "%", xPercent: -50, yPercent: -50 });
+          buildTl.fromTo(
+            p,
+            { x: x * 9, y: y * 9, opacity: 0, scale: 0.5, rotate: i % 2 ? 22 : -22 },
+            { x: 0, y: 0, opacity: 1, scale: 1, rotate: 0, ease: "power2.out", duration: 1 },
+            i * 0.35,
+          );
+        });
+
+        buildTl.fromTo("#buildCore", { scale: 0.86, opacity: 0.35 }, { scale: 1, opacity: 1, duration: 1.4, ease: "power2.out" }, 0);
+
+        /* ── 3. Ticker — base drift plus scroll-velocity surge ── */
+        const ticker = document.getElementById("ticker");
+        const WORDS = ["FOLDABLE", "300 LUX", "DUAL SUSPENSION", "7-SPEED SHIMANO", "250W HUB"];
+        ticker.innerHTML = Array.from({ length: 3 }, () =>
+          WORDS.map((w) => `<span>${w}</span>`).join(""),
+        ).join("");
+
+        const tx = { v: 0, boost: 0 };
+        gsap.ticker.add(() => {
+          tx.v -= 1.1 + tx.boost;
+          tx.boost *= 0.93;
+          const third = ticker.scrollWidth / 3;
+          if (-tx.v >= third) tx.v += third;
+          ticker.style.transform = `translateX(${tx.v}px)`;
+        });
+        ScrollTrigger.create({
+          onUpdate: (self) => (tx.boost = Math.min(Math.abs(self.getVelocity()) / 300, 20)),
+        });
+
+        /* ── 4. Story rows — image parallaxes inside its own frame ── */
+        gsap.utils.toArray(".story-media").forEach((box) => {
+          gsap.fromTo(
+            box.querySelector("img"),
+            { yPercent: -12, scale: 1.16 },
+            {
+              yPercent: 12, scale: 1.16, ease: "none",
+              scrollTrigger: { trigger: box, start: "top bottom", end: "bottom top", scrub: true },
+            },
+          );
+          gsap.from(box, {
+            clipPath: "inset(0 0 100% 0)", duration: 1.1, ease: "power3.out",
+            scrollTrigger: { trigger: box, start: "top 85%" },
+          });
+        });
+
+        gsap.utils.toArray(".story-copy p").forEach((p) => {
+          gsap.from(p, {
+            y: 24, opacity: 0, duration: 0.8, ease: "power3.out",
+            scrollTrigger: { trigger: p, start: "top 88%" },
+          });
+        });
+      } else {
+        // Static ticker content still needs to exist
+        document.getElementById("ticker").innerHTML =
+          ["FOLDABLE", "300 LUX", "DUAL SUSPENSION", "7-SPEED SHIMANO", "250W HUB"]
+            .map((w) => `<span>${w}</span>`).join("");
+      }
+
+      /* ── 5. Config ── */
+      const BASE = 66500;
+      const inr = (n) => "₹" + n.toLocaleString("en-IN");
+      const cfg = document.getElementById("cfg");
+      const cfgStage = document.getElementById("cfgStage");
+      const cfgName = document.getElementById("cfgName");
+      const cfgTotal = document.getElementById("cfgTotal");
+
+      const recalc = () => {
+        const boxes = [...document.querySelectorAll("#addons input")];
+        const sum = BASE + boxes.reduce((t, b) => t + (b.checked ? +b.dataset.price : 0), 0);
+        boxes.forEach((b) => b.closest(".addon").classList.toggle("is-on", b.checked));
+        // Count the total up rather than snapping it, so the change registers
+        const obj = { v: parseInt(cfgTotal.textContent.replace(/\D/g, ""), 10) || BASE };
+        gsap.to(obj, {
+          v: sum, duration: 0.5, ease: "power2.out",
+          onUpdate: () => (cfgTotal.textContent = inr(Math.round(obj.v))),
+        });
+      };
+      document.getElementById("addons").addEventListener("change", recalc);
+
+      document.getElementById("swRow").addEventListener("click", (e) => {
+        const b = e.target.closest(".sw");
+        if (!b) return;
+        document.querySelectorAll("#swRow .sw")
+          .forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        cfgStage.querySelectorAll("img").forEach((im) => {
+          const on = im.dataset.colour === b.dataset.colour;
+          im.classList.toggle("is-on", on);
+          gsap.to(im, { opacity: on ? 1 : 0, duration: 0.55, ease: "power3.out" });
+        });
+        cfg.style.background = `radial-gradient(75% 90% at 30% 50%, rgba(${b.dataset.tint},.2), transparent 70%)`;
+        cfgName.textContent = b.dataset.name;
+        gsap.from(cfgName, { yPercent: 40, opacity: 0, duration: 0.6, ease: "power4.out" });
+      });
+
+      addEventListener("load", () => ScrollTrigger.refresh());
+    </script>
+  </body>
+</html>

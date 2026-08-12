@@ -844,6 +844,84 @@ body.menu-open { overflow: hidden; }
     line-height: 1.35;
 }
 
+/* —— Service promise cards ——
+   Four reassurance cards under the bike. They sit ON the blurred banner,
+   so the fill is translucent + blurred rather than a flat panel — the
+   photo stays readable through them and they don't read as a pasted-on
+   strip. House theme: dark glass, hairline border, red icon. */
+.cycle-promises {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1320px;
+    /* The bike PNG carries a -12% bottom margin to trim its baked-in
+       reflection, so the gap above is measured from the artwork, not the
+       file — hence the larger top value. */
+    margin: 64px auto 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.promise-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px 22px 24px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(20, 20, 23, 0.62);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease),
+        background 0.3s var(--ease);
+}
+.promise-card:hover {
+    border-color: rgba(173, 1, 1, 0.55);
+    background: rgba(20, 20, 23, 0.78);
+    transform: translateY(-4px);
+}
+
+.promise-icon {
+    flex: none;
+    font-size: 26px;
+    line-height: 1;
+    margin-top: 2px;
+    color: var(--red-lit);
+    transition: transform 0.3s var(--ease);
+}
+.promise-card:hover .promise-icon { transform: scale(1.1); }
+
+.promise-copy { min-width: 0; }
+
+.promise-title {
+    margin: 0 0 6px;
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    color: var(--white);
+}
+.promise-note {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-soft);
+}
+
+@media (max-width: 1024px) {
+    .cycle-promises { grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 52px; }
+}
+@media (max-width: 520px) {
+    .cycle-promises { grid-template-columns: 1fr; gap: 12px; margin-top: 40px; }
+    .promise-card { padding: 18px; gap: 14px; }
+    .promise-icon { font-size: 23px; }
+    .promise-title { font-size: 16px; }
+}
+
 /* —— Hero footer buttons —— */
 .hero-foot {
     position: relative;
@@ -1430,7 +1508,158 @@ body {
 }
 
 /* ============================================================ */
-/* SECTION 3 — FEATURES (bike → explore → feature grid)          */
+/* SECTION 3 — MEDIA / PRESS MARQUEE                            */
+/* ============================================================ */
+.media {
+    position: relative;
+    background: var(--black);
+    padding: var(--section-gap) 0 calc(var(--section-gap) + 8px);
+    overflow: hidden;
+}
+
+/* Heading — same corner-frame block as Products / Merch / Cycles */
+.media-head {
+    position: relative;
+    padding: 32px 0 30px;
+    margin-bottom: 30px;
+}
+.media-head .cf-mark--tl { top: 8px; left: -22px; }
+.media-head .cf-mark--br { bottom: 8px; right: -22px; }
+.media-head .heading-title .accent { color: var(--red-lit); }
+
+.media-head-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px 48px;
+}
+.media-head .heading-copy { min-width: 0; }
+.media-head .heading-copy .eyebrow { margin-bottom: 16px; letter-spacing: 4.5px; }
+.media-head .heading-copy .heading-title {
+    font-size: clamp(30px, 3.6vw, 46px);
+    line-height: 1.08;
+}
+.media-head .heading-desc {
+    flex: 0 1 auto;
+    max-width: 380px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-soft);
+    text-align: right;
+    margin: 0;
+}
+
+/* ——— Marquee rail ———
+   The live svitchbike.com does this with a <marquee> tag plus a 3s
+   setTimeout that un-hides it. <marquee> is deprecated, can't be paused
+   and ignores reduced-motion, so this is a CSS translate instead: the
+   track holds the logo list twice and slides exactly -50%, which lands on
+   the start of the duplicate — visually identical to frame 0, so the loop
+   never jumps. */
+.media-marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /* Full-bleed rail: the logos run edge to edge, ignoring .container */
+    padding: 6px 0;
+    /* Feather both ends so logos dissolve instead of being guillotined */
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 90px,
+        #000 calc(100% - 90px),
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 90px,
+        #000 calc(100% - 90px),
+        transparent 100%
+    );
+}
+
+.media-track {
+    display: flex;
+    width: max-content;
+    animation: media-scroll 46s linear infinite;
+}
+/* Hovering the rail holds it still so a logo can actually be clicked */
+.media-marquee:hover .media-track { animation-play-state: paused; }
+
+@keyframes media-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+.media-group {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    margin: 0;
+    /* Trailing space must equal the gap, or the seam between the two
+       copies shows up as one tighter gap every lap */
+    padding: 0 64px 0 0;
+    list-style: none;
+    flex: none;
+}
+
+.media-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    height: 56px;
+}
+.media-logo a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+/* Every source PNG is cropped tight to its artwork, so these two caps size
+   the LOGO rather than transparent padding — that padding was up to 87% of
+   some files and was what made the row look so uneven. The browser takes
+   whichever cap binds first, so a tall mark (CNBC) matches on height and a
+   long wordmark (Financial Express) matches on width. */
+.media-logo img {
+    display: block;
+    max-height: 36px;
+    max-width: 180px;
+    width: auto;
+    height: auto;
+    /* Logos sit back until pointed at, so the rail reads as one texture
+       rather than twelve competing brand colours on black */
+    opacity: 0.75;
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.media-logo a:hover img {
+    opacity: 1;
+    transform: scale(1.06);
+}
+
+@media (max-width: 788px) {
+    .media-head { padding: 24px 0 22px; margin-bottom: 22px; }
+    .media-head-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .media-head .heading-desc { text-align: left; max-width: 100%; }
+    .media-group { gap: 40px; padding-right: 40px; }
+    .media-logo { height: 44px; }
+    .media-logo img { max-height: 28px; max-width: 140px; }
+    .media-marquee {
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%);
+        mask-image: linear-gradient(90deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%);
+    }
+    .media-track { animation-duration: 32s; }
+}
+
+/* No auto-scroll — the rail becomes a normal swipeable row instead. */
+@media (prefers-reduced-motion: reduce) {
+    .media-marquee { overflow-x: auto; }
+    .media-track { animation: none; }
+}
+
+/* ============================================================ */
+/* SECTION 4 — FEATURES (bike → explore → feature grid)          */
 /* ============================================================ */
 .features {
     position: relative;
@@ -1652,7 +1881,7 @@ body {
 }
 
 /* ============================================================ */
-/* SECTION 3 — FEATURES RESPONSIVE                              */
+/* SECTION 4 — FEATURES RESPONSIVE                              */
 /* ============================================================ */
 @media (max-width: 1180px) {
     .features { padding: 30px 40px 32px; }
@@ -1680,7 +1909,7 @@ body {
 }
 
 /* ============================================================ */
-/* SECTION 4 — SVITCH MERCHANDISE (Royal-Enfield auto carousel)  */
+/* SECTION 5 — SVITCH MERCHANDISE (Royal-Enfield auto carousel)  */
 /* ============================================================ */
 .merch {
     position: relative;
@@ -1927,7 +2156,7 @@ body {
 }
 
 /* ============================================================ */
-/* SECTION 4 — MERCH RESPONSIVE                                 */
+/* SECTION 5 — MERCH RESPONSIVE                                 */
 /* ============================================================ */
 @media (max-width: 787px) {
     .merch { padding: var(--section-gap) 0 64px; }
@@ -1947,7 +2176,7 @@ body {
 }
 
 /* ============================================================ */
-/* SECTION 5 — SVITCH STORIES (zoom-on-scroll gallery)          */
+/* SECTION 7 — SVITCH STORIES (zoom-on-scroll gallery)          */
 /* CSR-762 c4 mechanism: tall section, sticky viewport, stacked */
 /* cards that scale up one after another, cut corners (TL + BR) */
 /* ============================================================ */
@@ -2061,6 +2290,241 @@ body {
 /* FOOTER — Svitch-branded copy of the CSR762 footer            */
 /* brand + link columns, bottom bar, back-to-top button         */
 /* ============================================================ */
+/* ============================================================ */
+/* SECTION 8 — DEALERS + NEWSLETTER (skewed tile rail)          */
+/* ============================================================ */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.dealers {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    overflow: hidden;
+}
+
+/* ——— Rail ———
+   Full-bleed off the left edge. Track holds the card list twice and
+   travels exactly -50%, which lands on the start of the duplicate, so the
+   loop is seamless. Trailing padding on each group must equal the gap or
+   the seam shows as one tight join every lap. */
+.dealers-rail {
+    overflow: hidden;
+    padding: var(--section-gap) 0;
+    -webkit-mask-image: linear-gradient(
+        90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    mask-image: linear-gradient(
+        90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+.dealers-track {
+    display: flex;
+    width: max-content;
+    animation: dealers-scroll 48s linear infinite;
+}
+.dealers-rail:hover .dealers-track { animation-play-state: paused; }
+
+@keyframes dealers-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+.dealers-group {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    margin: 0;
+    padding: 0 26px 0 0;
+    list-style: none;
+    flex: none;
+}
+
+/* ——— Dealer card ———
+   Landscape and large, because these carry storefront photos that have to
+   be legible — a tall narrow tile would crop a shopfront to nothing. The
+   skew is a shallow 7deg for the same reason: enough to echo the angular
+   corner-frame headings, not enough to distort what's in the picture. */
+.dealer-card {
+    position: relative;
+    flex: none;
+    width: 400px;
+    height: 280px;
+    border-radius: 16px;
+    overflow: hidden;
+    transform: skewX(-7deg);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.dealer-card:hover {
+    transform: skewX(-7deg) scale(1.03);
+    border-color: rgba(173, 1, 1, 0.55);
+}
+
+/* The photo is counter-skewed so it sits upright inside the slanted frame.
+   The 120%/-10% overhang covers the corners the shear would leave empty —
+   without it you get transparent wedges at the left and right edges. */
+.dealer-card img {
+    width: 120%;
+    height: 100%;
+    margin-left: -10%;
+    object-fit: cover;
+    transform: skewX(7deg);
+    transition: transform 0.6s var(--ease);
+}
+.dealer-card:hover img { transform: skewX(7deg) scale(1.06); }
+
+.dealer-card-label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 42px 26px 18px;
+    transform: skewX(7deg);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.82) 62%);
+    pointer-events: none;
+}
+.dealer-name {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    color: var(--white);
+}
+.dealer-city {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    letter-spacing: 0.4px;
+    color: var(--text-soft);
+}
+
+/* ——— Copy + form ——— */
+.dealers-copy {
+    padding: var(--section-gap) clamp(24px, 5vw, 72px) var(--section-gap) 0;
+}
+.dealers-head { padding: 22px 0 10px; margin-bottom: 18px; }
+.dealers-head .cf-mark--tl { top: 0; left: -22px; }
+.dealers-head .cf-mark--br { bottom: 0; right: -22px; }
+.dealers-head .heading-copy .eyebrow { margin-bottom: 14px; letter-spacing: 4.5px; }
+.dealers-head .heading-copy .heading-title {
+    font-size: clamp(28px, 3.2vw, 42px);
+    line-height: 1.08;
+}
+.dealers-head .heading-title .accent { color: var(--red-lit); }
+
+.dealers-desc {
+    margin: 0 0 26px;
+    max-width: 430px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-soft);
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    max-width: 470px;
+}
+.newsletter-form input {
+    flex: 1 1 220px;
+    min-width: 0;
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.newsletter-form input::placeholder { color: var(--text-dim); }
+.newsletter-form input:focus {
+    border-color: var(--red-lit);
+    background: rgba(255, 255, 255, 0.07);
+}
+.newsletter-form.is-error input { border-color: var(--red-lit); }
+
+.newsletter-form button {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 14px 24px;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.newsletter-form button:hover {
+    background: var(--red-lit);
+    transform: translateY(-2px);
+}
+.newsletter-form.is-done button {
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    transform: none;
+}
+
+.newsletter-msg {
+    flex: 1 0 100%;
+    margin: 2px 0 0;
+    min-height: 18px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+}
+.newsletter-form.is-error .newsletter-msg { color: var(--red-lit); }
+
+.dealers-fine {
+    margin: 16px 0 0;
+    font-size: 12.5px;
+    color: var(--text-dim);
+}
+
+@media (max-width: 1024px) {
+    .dealers { grid-template-columns: 1fr; gap: 0; }
+    /* Rail below the copy on narrow screens so the form is reached first */
+    .dealers-rail { order: 2; padding: 0 0 var(--section-gap); }
+    .dealers-copy { order: 1; padding: var(--section-gap) 24px 32px; }
+    .dealers-desc { max-width: 100%; }
+    .dealer-card { width: 320px; height: 224px; }
+}
+@media (max-width: 600px) {
+    .dealer-card { width: 250px; height: 176px; }
+    .dealers-group { gap: 18px; padding-right: 18px; }
+    .dealer-card-label { padding: 34px 20px 14px; }
+    .dealer-name { font-size: 15px; }
+    .dealers-track { animation-duration: 34s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dealers-rail { overflow-x: auto; }
+    .dealers-track { animation: none; }
+}
+
 #footer {
     background: var(--black);
     border-top: 1px solid var(--line);

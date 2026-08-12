@@ -258,6 +258,44 @@ document.addEventListener("DOMContentLoaded", () => {
   if (yearEl) {
     yearEl.textContent = yearEl.textContent.replace(/\d{4}/, new Date().getFullYear());
   }
+  /* ─── Newsletter form ───
+       No endpoint yet — this validates the address and shows the confirmed
+       state so the section behaves. Point it at the real list provider by
+       replacing the body of the success branch. */
+  const newsletterForm = document.getElementById("newsletterForm");
+
+  if (newsletterForm) {
+    const emailInput = document.getElementById("newsletterEmail");
+    const msg = document.getElementById("newsletterMsg");
+    const btn = newsletterForm.querySelector("button");
+
+    newsletterForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const value = emailInput.value.trim();
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
+        newsletterForm.classList.add("is-error");
+        msg.textContent = "Enter a valid email address.";
+        emailInput.focus();
+        return;
+      }
+
+      newsletterForm.classList.remove("is-error");
+      newsletterForm.classList.add("is-done");
+      btn.innerHTML = '<i class="bi bi-check2"></i> You\'re in';
+      msg.textContent = "Thanks — check your inbox to confirm.";
+      emailInput.readOnly = true;
+    });
+
+    // Clearing the error the moment they start fixing it
+    emailInput.addEventListener("input", () => {
+      if (!newsletterForm.classList.contains("is-error")) return;
+      newsletterForm.classList.remove("is-error");
+      msg.textContent = "";
+    });
+  }
+
   const toTopBtn = document.querySelector("[data-scroll-top]");
   if (toTopBtn) {
     toTopBtn.addEventListener("click", () => {

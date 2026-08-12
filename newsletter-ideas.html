@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Svitch — Newsletter Directions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Inter:wght@400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+
+    <style>
+      /* Tokens copied from style.css so this page is self-contained and
+         can't be knocked around by the site's section rules. */
+      :root {
+        --red: #ad0101;
+        --red-lit: #d40202;
+        --black: #000;
+        --white: #fff;
+        --surface: #0b0b0d;
+        --surface-2: #141417;
+        --line: rgba(255, 255, 255, 0.1);
+        --text-soft: rgba(255, 255, 255, 0.6);
+        --text-dim: rgba(255, 255, 255, 0.4);
+        --font-display: "Barlow", "Century Gothic", Verdana, Arial, sans-serif;
+        --font-heading: "Rajdhani", "Barlow", sans-serif;
+        --font-body: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--black);
+        color: var(--white);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+      }
+      img { display: block; max-width: 100%; }
+
+      /* ——— Chooser chrome (not part of any design) ——— */
+      .picker-bar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        padding: 14px 26px;
+        background: rgba(8, 8, 10, 0.86);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--line);
+      }
+      .picker-bar strong {
+        font-family: var(--font-heading);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-size: 13px;
+      }
+      .picker-bar a {
+        color: var(--text-soft);
+        text-decoration: none;
+        font-size: 12.5px;
+        font-weight: 500;
+        padding: 5px 11px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        transition: all 0.25s var(--ease);
+      }
+      .picker-bar a:hover {
+        color: var(--white);
+        border-color: var(--red-lit);
+      }
+
+      .idea-label {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding: 54px 26px 20px;
+        max-width: 1320px;
+        margin: 0 auto;
+      }
+      .idea-num {
+        font-family: var(--font-heading);
+        font-size: 13px;
+        letter-spacing: 3px;
+        color: var(--red-lit);
+      }
+      .idea-name {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0;
+      }
+      .idea-mech {
+        flex: 1 1 320px;
+        margin: 0;
+        font-size: 13.5px;
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+      .idea-sep { height: 1px; background: var(--line); margin: 0 26px; }
+
+      /* ——— Shared newsletter form furniture ——— */
+      .nl-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0 0 16px;
+        font-family: var(--font-heading);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 4.5px;
+        text-transform: uppercase;
+        color: var(--white);
+      }
+      .nl-eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 2px;
+        background: var(--red-lit);
+      }
+      .nl-title {
+        margin: 0 0 14px;
+        font-family: var(--font-display);
+        font-size: clamp(28px, 3.4vw, 44px);
+        font-weight: 700;
+        line-height: 1.08;
+      }
+      .nl-title .accent { color: var(--red-lit); }
+      .nl-desc {
+        margin: 0 0 26px;
+        max-width: 430px;
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--text-soft);
+      }
+      .nl-form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        max-width: 470px;
+      }
+      .nl-form input {
+        flex: 1 1 220px;
+        min-width: 0;
+        padding: 14px 16px;
+        font-family: var(--font-body);
+        font-size: 14px;
+        color: var(--white);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        outline: none;
+        transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+      }
+      .nl-form input::placeholder { color: var(--text-dim); }
+      .nl-form input:focus {
+        border-color: var(--red-lit);
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .nl-form button {
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 14px 24px;
+        font-family: var(--font-heading);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+        color: var(--white);
+        background: var(--red);
+        border: 0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+      }
+      .nl-form button:hover {
+        background: var(--red-lit);
+        transform: translateY(-2px);
+      }
+      .nl-fine {
+        margin: 16px 0 0;
+        font-size: 12.5px;
+        color: var(--text-dim);
+      }
+      .nl-form.is-done button {
+        background: rgba(255, 255, 255, 0.1);
+        pointer-events: none;
+      }
+
+      /* Seamless rails: every track holds its list TWICE and travels
+         exactly -50%, landing on the start of the duplicate. */
+      @keyframes rail-up { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+      @keyframes rail-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+      @keyframes rail-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+      /* ══════════ IDEA 1 — SPLIT RAIL ══════════ */
+      .nl1 {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        align-items: stretch;
+        background: var(--surface);
+        border-block: 1px solid var(--line);
+      }
+      .nl1-rail {
+        position: relative;
+        overflow: hidden;
+        height: 560px;
+        -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+        mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+      }
+      .nl1-track {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+        animation: rail-up 34s linear infinite;
+      }
+      .nl1-track img {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+        border-radius: 14px;
+        flex: none;
+      }
+      .nl1-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 64px clamp(26px, 5vw, 76px);
+      }
+
+      /* ══════════ IDEA 2 — OPPOSING COLUMNS ══════════ */
+      .nl2 {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: stretch;
+        background: var(--black);
+        border-block: 1px solid var(--line);
+      }
+      .nl2-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 74px clamp(26px, 5vw, 76px);
+      }
+      .nl2-rails {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding: 16px;
+        height: 580px;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(180deg, transparent, #000 16%, #000 84%, transparent);
+        mask-image: linear-gradient(180deg, transparent, #000 16%, #000 84%, transparent);
+      }
+      .nl2-col { overflow: hidden; }
+      .nl2-track {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .nl2-col:nth-child(1) .nl2-track { animation: rail-up 30s linear infinite; }
+      .nl2-col:nth-child(2) .nl2-track { animation: rail-down 30s linear infinite; }
+      .nl2-track img {
+        width: 100%;
+        height: 210px;
+        object-fit: cover;
+        border-radius: 12px;
+        flex: none;
+      }
+
+      /* ══════════ IDEA 3 — BAND + GLASS CARD ══════════ */
+      .nl3 {
+        position: relative;
+        padding: 86px 26px;
+        background: var(--black);
+        overflow: hidden;
+        border-block: 1px solid var(--line);
+      }
+      .nl3-band {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .nl3-band::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(0,0,0,0.96) 30%, rgba(0,0,0,0.55) 100%);
+      }
+      .nl3-track {
+        display: flex;
+        gap: 14px;
+        height: 100%;
+        align-items: center;
+        width: max-content;
+        animation: rail-left 42s linear infinite;
+      }
+      .nl3-track img {
+        width: 300px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 14px;
+        flex: none;
+      }
+      .nl3-card {
+        position: relative;
+        z-index: 2;
+        max-width: 560px;
+        padding: 44px clamp(26px, 4vw, 48px);
+        background: rgba(15, 15, 18, 0.72);
+        backdrop-filter: blur(18px);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+      }
+
+      /* ══════════ IDEA 4 — KEN BURNS CROSSFADE ══════════ */
+      .nl4 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: clamp(28px, 5vw, 72px);
+        padding: 84px clamp(26px, 5vw, 76px);
+        max-width: 1420px;
+        margin: 0 auto;
+        background: var(--black);
+      }
+      .nl4-frame {
+        position: relative;
+        aspect-ratio: 4 / 3.1;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+      }
+      .nl4-frame img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transform: scale(1.12);
+        transition: opacity 1.2s ease-in-out;
+      }
+      /* Each slide fades in AND keeps drifting, so the frame is never still */
+      .nl4-frame img.is-on {
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 1.2s ease-in-out, transform 7s linear;
+      }
+      .nl4-dots {
+        position: absolute;
+        left: 18px;
+        bottom: 18px;
+        display: flex;
+        gap: 6px;
+        z-index: 2;
+      }
+      .nl4-dots span {
+        width: 22px;
+        height: 3px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.28);
+        transition: background 0.4s var(--ease);
+      }
+      .nl4-dots span.is-on { background: var(--red-lit); }
+
+      /* ══════════ IDEA 5 — SKEWED TILE RAIL ══════════ */
+      .nl5 {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: center;
+        background: var(--surface);
+        border-block: 1px solid var(--line);
+        overflow: hidden;
+      }
+      .nl5-rail {
+        overflow: hidden;
+        padding: 74px 0;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+      }
+      .nl5-track {
+        display: flex;
+        gap: 18px;
+        width: max-content;
+        animation: rail-left 38s linear infinite;
+      }
+      .nl5-tile {
+        flex: none;
+        width: 230px;
+        height: 310px;
+        border-radius: 14px;
+        overflow: hidden;
+        transform: skewX(-9deg);
+        background: var(--surface-2);
+      }
+      /* Counter-skew the photo so only the frame is a parallelogram; the
+         overhang stops the skew from exposing empty corners. */
+      .nl5-tile img {
+        width: 118%;
+        height: 100%;
+        margin-left: -9%;
+        object-fit: cover;
+        transform: skewX(9deg);
+      }
+      .nl5-copy { padding: 74px clamp(26px, 5vw, 70px); }
+
+      /* ——— Responsive ——— */
+      @media (max-width: 900px) {
+        .nl1, .nl2, .nl4, .nl5 { grid-template-columns: 1fr; }
+        .nl1-rail { height: 320px; order: 2; }
+        .nl1-copy, .nl2-copy, .nl5-copy { padding: 48px 24px; }
+        .nl2-rails { height: 340px; order: 2; }
+        .nl4 { padding: 48px 24px; }
+        .nl4-frame { order: 2; }
+        .nl5-rail { padding: 40px 0; }
+        .nl5-tile { width: 170px; height: 230px; }
+        .nl3 { padding: 56px 20px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .nl1-track, .nl2-track, .nl3-track, .nl5-track { animation: none; }
+        .nl4-frame img.is-on { transition: opacity 0.2s; transform: none; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="picker-bar">
+      <strong>Newsletter — 5 directions</strong>
+      <a href="#idea1">01 Split Rail</a>
+      <a href="#idea2">02 Opposing Columns</a>
+      <a href="#idea3">03 Band + Glass Card</a>
+      <a href="#idea4">04 Ken Burns Frame</a>
+      <a href="#idea5">05 Skewed Tiles</a>
+    </div>
+
+    <!-- ══════════ IDEA 1 ══════════ -->
+    <div class="idea-label" id="idea1">
+      <span class="idea-num">IDEA 01</span>
+      <h2 class="idea-name">Split Rail</h2>
+      <p class="idea-mech">
+        Images on the left in one tall column drifting upward forever. Form on
+        the right. The calmest of the five — reads as editorial, not promo.
+      </p>
+    </div>
+    <section class="nl1">
+      <div class="nl1-rail"><div class="nl1-track" data-rail="v1"></div></div>
+      <div class="nl1-copy">
+        <p class="nl-eyebrow">Stay In The Loop</p>
+        <h2 class="nl-title">Be First To <span class="accent">Ride</span></h2>
+        <p class="nl-desc">
+          New drops, dealer openings and ride stories — straight to your inbox,
+          roughly twice a month. No noise.
+        </p>
+        <form class="nl-form">
+          <input type="email" placeholder="your@email.com" required />
+          <button type="submit">Subscribe <i class="bi bi-arrow-right"></i></button>
+        </form>
+        <p class="nl-fine">Unsubscribe any time. We never share your address.</p>
+      </div>
+    </section>
+
+    <div class="idea-sep"></div>
+
+    <!-- ══════════ IDEA 2 ══════════ -->
+    <div class="idea-label" id="idea2">
+      <span class="idea-num">IDEA 02</span>
+      <h2 class="idea-name">Opposing Columns</h2>
+      <p class="idea-mech">
+        Two image columns on the right, one travelling up and one down. The
+        counter-motion gives it the most depth — closest to the automotive feel
+        the rest of the site has.
+      </p>
+    </div>
+    <section class="nl2">
+      <div class="nl2-copy">
+        <p class="nl-eyebrow">The Svitch List</p>
+        <h2 class="nl-title">Built To <span class="accent">Move You</span></h2>
+        <p class="nl-desc">
+          Launches, offers and everything rolling out of the workshop. Join the
+          riders who hear it first.
+        </p>
+        <form class="nl-form">
+          <input type="email" placeholder="your@email.com" required />
+          <button type="submit">Join <i class="bi bi-arrow-right"></i></button>
+        </form>
+        <p class="nl-fine">Two emails a month. Unsubscribe any time.</p>
+      </div>
+      <div class="nl2-rails">
+        <div class="nl2-col"><div class="nl2-track" data-rail="v2a"></div></div>
+        <div class="nl2-col"><div class="nl2-track" data-rail="v2b"></div></div>
+      </div>
+    </section>
+
+    <div class="idea-sep"></div>
+
+    <!-- ══════════ IDEA 3 ══════════ -->
+    <div class="idea-label" id="idea3">
+      <span class="idea-num">IDEA 03</span>
+      <h2 class="idea-name">Band + Glass Card</h2>
+      <p class="idea-mech">
+        Full-bleed horizontal photo band running behind everything, with the
+        subscribe form floating over it in a glass panel. Boldest of the five,
+        and the only one that fills the whole width.
+      </p>
+    </div>
+    <section class="nl3">
+      <div class="nl3-band"><div class="nl3-track" data-rail="h3"></div></div>
+      <div class="nl3-card">
+        <p class="nl-eyebrow">Join The Ride</p>
+        <h2 class="nl-title">Don't Miss The <span class="accent">Drop</span></h2>
+        <p class="nl-desc">
+          Early access to new builds, limited colours and city launches before
+          they go public.
+        </p>
+        <form class="nl-form">
+          <input type="email" placeholder="your@email.com" required />
+          <button type="submit">Notify Me <i class="bi bi-arrow-right"></i></button>
+        </form>
+        <p class="nl-fine">No spam — just the good stuff.</p>
+      </div>
+    </section>
+
+    <div class="idea-sep"></div>
+
+    <!-- ══════════ IDEA 4 ══════════ -->
+    <div class="idea-label" id="idea4">
+      <span class="idea-num">IDEA 04</span>
+      <h2 class="idea-name">Ken Burns Frame</h2>
+      <p class="idea-mech">
+        One framed photo on the right that crossfades between shots while slowly
+        drifting in. Lightest on the page — one image on screen at a time
+        instead of a moving wall.
+      </p>
+    </div>
+    <section class="nl4">
+      <div class="nl4-copy">
+        <p class="nl-eyebrow">Newsletter</p>
+        <h2 class="nl-title">Every Chapter, <span class="accent">First</span></h2>
+        <p class="nl-desc">
+          The stories behind the builds, the riders and the roads. Delivered
+          when there's something worth saying.
+        </p>
+        <form class="nl-form">
+          <input type="email" placeholder="your@email.com" required />
+          <button type="submit">Sign Up <i class="bi bi-arrow-right"></i></button>
+        </form>
+        <p class="nl-fine">Unsubscribe any time.</p>
+      </div>
+      <div class="nl4-frame" data-rail="kb4">
+        <div class="nl4-dots"></div>
+      </div>
+    </section>
+
+    <div class="idea-sep"></div>
+
+    <!-- ══════════ IDEA 5 ══════════ -->
+    <div class="idea-label" id="idea5">
+      <span class="idea-num">IDEA 05</span>
+      <h2 class="idea-name">Skewed Tiles</h2>
+      <p class="idea-mech">
+        Slanted photo tiles sliding sideways on the left. Sharpest, most
+        graphic option — the skew echoes the angular corner-frame headings
+        already used across the site.
+      </p>
+    </div>
+    <section class="nl5">
+      <div class="nl5-rail"><div class="nl5-track" data-rail="h5"></div></div>
+      <div class="nl5-copy">
+        <p class="nl-eyebrow">Get The Drop</p>
+        <h2 class="nl-title">Ahead Of The <span class="accent">Curve</span></h2>
+        <p class="nl-desc">
+          Sign up for launches, offers and the occasional look inside the
+          workshop.
+        </p>
+        <form class="nl-form">
+          <input type="email" placeholder="your@email.com" required />
+          <button type="submit">Subscribe <i class="bi bi-arrow-right"></i></button>
+        </form>
+        <p class="nl-fine">Two emails a month, no more.</p>
+      </div>
+    </section>
+
+    <div style="height: 80px"></div>
+
+    <script>
+      /* Photos are injected from one list so swapping the imagery is a
+         single edit here. When a direction is picked, the winner gets
+         written into index.html as static markup instead. */
+      const SLIDES = [
+        "images/slide-1.webp",
+        "images/slide-2.webp",
+        "images/slide-3.webp",
+        "images/slide-4.webp",
+      ];
+      // Placeholder imagery only — the four banner slides cycled to fill each
+      // rail. Swap SLIDES for the real newsletter shots when they exist.
+      const SHOTS = Array.from({ length: 12 }, (_, i) => SLIDES[i % SLIDES.length]);
+
+      // Every rail needs its list twice — the -50% travel lands on the
+      // start of the copy, so the loop never visibly jumps.
+      const fill = (el, list) => {
+        const html = list.map((s) => `<img src="${s}" alt="" loading="lazy" />`).join("");
+        el.innerHTML = html + html;
+      };
+
+      fill(document.querySelector('[data-rail="v1"]'), SHOTS.slice(0, 6));
+      fill(document.querySelector('[data-rail="v2a"]'), SHOTS.slice(0, 5));
+      fill(document.querySelector('[data-rail="v2b"]'), SHOTS.slice(5, 10));
+      fill(document.querySelector('[data-rail="h3"]'), SHOTS.slice(0, 8));
+
+      const h5 = document.querySelector('[data-rail="h5"]');
+      const tiles = SHOTS.slice(0, 7)
+        .map((s) => `<div class="nl5-tile"><img src="${s}" alt="" loading="lazy" /></div>`)
+        .join("");
+      h5.innerHTML = tiles + tiles;
+
+      /* Idea 4 — crossfade with the drift restarting on each slide */
+      const kb = document.querySelector('[data-rail="kb4"]');
+      const kbShots = SHOTS.slice(0, 5);
+      const dots = kb.querySelector(".nl4-dots");
+      kbShots.forEach((s, i) => {
+        kb.insertAdjacentHTML(
+          "afterbegin",
+          `<img src="${s}" alt="" ${i ? 'loading="lazy"' : ""} />`,
+        );
+        dots.insertAdjacentHTML("beforeend", "<span></span>");
+      });
+      const kbImgs = [...kb.querySelectorAll("img")].reverse();
+      const kbDots = [...dots.children];
+      let k = 0;
+      const showKb = (i) => {
+        kbImgs.forEach((im, n) => im.classList.toggle("is-on", n === i));
+        kbDots.forEach((d, n) => d.classList.toggle("is-on", n === i));
+      };
+      showKb(0);
+      setInterval(() => showKb((k = (k + 1) % kbImgs.length)), 4200);
+
+      /* Forms are demo-only — no endpoint yet, just the success state */
+      document.querySelectorAll(".nl-form").forEach((f) => {
+        f.addEventListener("submit", (e) => {
+          e.preventDefault();
+          f.classList.add("is-done");
+          f.querySelector("button").innerHTML =
+            '<i class="bi bi-check2"></i> You\'re in';
+        });
+      });
+    </script>
+  </body>
+</html>
